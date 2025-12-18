@@ -1,0 +1,346 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:host {
+  --color-background-default: #fcfcfd;
+  --color-background-subtle: #f9fafb;
+  --color-background-hover: #f9fafb;
+  --color-background-brand: #f1f0f8; /** Brand purple background for cards, info banners, highlights */
+  --color-border-default: #d1d5db;
+  --color-border-subtle: #e5e7eb;
+  --color-border-brand: #816bbf; /** Brand purple border for highlighted cards, info banners */
+  --color-brand-primary: #5a4295; /** Procrewz Purple #5A4295 */
+  --color-brand-secondary: #9B4B95; /** Procrewz Magenta #9B4B95 */
+  --color-brand-accent: #2B2E69; /** Procrewz Navy #2B2E69 */
+  --color-focus-ring: #5a4295; /** Focus ring color for keyboard navigation */
+  --color-focus-ring-offset: #fcfcfd; /** Focus ring offset color (gap between element and ring) */
+  --color-focus-outline: #816bbf; /** Alternative focus outline color */
+  --color-icon-default: #6b7280;
+  --color-icon-subtle: #9ca3af;
+  --color-primary-default: #5a4295; /** Primary button/link default state */
+  --color-primary-hover: #423070; /** Primary hover state */
+  --color-primary-active: #140c27; /** Primary pressed/active state */
+  --color-primary-disabled: #d1d5db; /** Primary disabled state */
+  --color-secondary-default: #9B4B95; /** Secondary button/link default state */
+  --color-secondary-hover: #7D3C77; /** Secondary hover state */
+  --color-secondary-active: #5F2D59; /** Secondary pressed/active state */
+  --color-secondary-disabled: #d1d5db; /** Secondary disabled state */
+  --color-accent-default: #2B2E69; /** Accent button/link default state */
+  --color-accent-hover: #1D2050; /** Accent hover state */
+  --color-accent-active: #0D1620; /** Accent pressed/active state */
+  --color-accent-disabled: #d1d5db; /** Accent disabled state */
+  --color-destructive-default: #ef4444; /** Destructive button default state */
+  --color-destructive-hover: #B91C1C; /** Destructive hover state (red-700) */
+  --color-destructive-active: #991B1B; /** Destructive pressed/active state (red-800) */
+  --color-destructive-disabled: #d1d5db; /** Destructive disabled state */
+  --color-state-focus: #5a4295; /** Focus ring and outline color */
+  --color-state-active: #423070; /** Pressed/active state */
+  --color-state-disabled: #9ca3af; /** Disabled elements */
+  --color-state-hover: #423070; /** Hover state for primary elements */
+  --color-status-success-default: #10b981; /** Success state color */
+  --color-status-success-bg: #ecfdf5; /** Success background */
+  --color-status-success-text: #047857; /** Success text */
+  --color-status-success-border: #a7f3d0; /** Success border */
+  --color-status-success-icon: #10b981; /** Success icon color */
+  --color-status-warning-default: #f59e0b; /** Warning state color */
+  --color-status-warning-bg: #fffbeb; /** Warning background */
+  --color-status-warning-text: #b45309; /** Warning text */
+  --color-status-warning-border: #fde68a; /** Warning border */
+  --color-status-warning-icon: #f59e0b; /** Warning icon color */
+  --color-status-error-default: #ef4444; /** Error/danger state color */
+  --color-status-error-bg: #fef2f2; /** Error background */
+  --color-status-error-text: #b91c1c; /** Error text */
+  --color-status-error-border: #fecaca; /** Error border */
+  --color-status-error-icon: #ef4444; /** Error icon color */
+  --color-status-info-default: #3b82f6; /** Info state color */
+  --color-status-info-bg: #eff6ff; /** Info background */
+  --color-status-info-text: #1d4ed8; /** Info text */
+  --color-status-info-border: #bfdbfe; /** Info border */
+  --color-status-info-icon: #3b82f6; /** Info icon color */
+  --color-surface-default: #fcfcfd; /** Default surface (cards, containers) */
+  --color-surface-raised: #fcfcfd; /** Elevated surface (modals, popovers) */
+  --color-surface-sunken: #f9fafb; /** Recessed surface (input backgrounds) */
+  --color-surface-overlay: rgba(0, 0, 0, 0.5); /** Modal/dialog backdrop overlay */
+  --color-surface-inverse: #111827; /** Inverted surface for dark sections */
+  --color-text-default: #111827;
+  --color-text-muted: #4b5563;
+  --color-text-inverse: #fcfcfd;
+  --color-text-placeholder: #6b7280;
+  --color-text-label: #374151;
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-weight-thin: 100; /** Thin (100) */
+  --font-weight-extralight: 200; /** Extra Light (200) */
+  --font-weight-light: 300; /** Light (300) */
+  --font-weight-regular: 400; /** Regular (400) */
+  --font-weight-medium: 500; /** Medium (500) */
+  --font-weight-semibold: 600; /** Semibold (600) */
+  --font-weight-bold: 700; /** Bold (700) */
+  --font-weight-extrabold: 800; /** Extra Bold (800) */
+  --font-weight-black: 900; /** Black (900) */
+  --opacity-disabled: 0.5; /** Disabled state opacity */
+  --opacity-placeholder: 0.5; /** Placeholder text opacity */
+  --opacity-overlay: 0.75; /** Modal backdrop overlay */
+  --opacity-hover: 0.8; /** Hover state background */
+  --opacity-muted: 0.6; /** Muted/secondary content */
+  --shadow-none: none; /** No shadow */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /** Subtle shadow for cards */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); /** Small shadow for buttons */
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /** Medium shadow for dropdowns */
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /** Large shadow for modals */
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /** Extra large shadow */
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /** Maximum elevation */
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05); /** Inset shadow for inputs */
+  --border-width-0: 0px; /** No border */
+  --border-width-1: 1px; /** Default border width */
+  --border-width-2: 2px; /** Medium border width */
+  --border-width-3: 3px; /** Thick border width */
+  --border-width-4: 4px; /** Extra thick border width */
+  --duration-0: 0ms; /** Instant, no animation */
+  --duration-75: 75ms; /** Ultra fast micro-interactions */
+  --duration-100: 100ms; /** Very fast transitions */
+  --duration-150: 150ms; /** Fast transitions (hover, focus) */
+  --duration-200: 200ms; /** Default transition speed */
+  --duration-300: 300ms; /** Medium transitions (modals, dropdowns) */
+  --duration-500: 500ms; /** Slow transitions (page elements) */
+  --duration-700: 700ms; /** Very slow transitions */
+  --duration-1000: 1000ms; /** 1 second duration */
+  --motion-linear: linear; /** No easing, constant speed */
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1); /** Starts slow, accelerates */
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1); /** Starts fast, decelerates */
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); /** Slow start and end, fast middle */
+  --motion-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /** Bouncy spring effect */
+  --motion-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /** Overshoot and settle */
+  --radius-0: 0; /** No border radius */
+  --radius-2: 2px; /** 2px border radius */
+  --radius-4: 4px; /** 4px border radius */
+  --radius-6: 6px; /** 6px border radius */
+  --radius-8: 8px; /** 8px border radius */
+  --radius-12: 12px; /** 12px border radius */
+  --radius-16: 16px; /** 16px border radius */
+  --radius-24: 24px; /** 24px border radius */
+  --radius-full: 9999px; /** Fully rounded (pills, circles) */
+  --size-avatar-xs: 24px; /** Extra small avatar (24px) */
+  --size-avatar-sm: 32px; /** Small avatar (32px) */
+  --size-avatar-md: 40px; /** Medium avatar (40px) */
+  --size-avatar-lg: 48px; /** Large avatar (48px) */
+  --size-avatar-xl: 64px; /** Extra large avatar (64px) */
+  --size-avatar-2xl: 96px; /** 2x large avatar (96px) */
+  --size-control-xs: 24px; /** Extra small control height (24px) */
+  --size-control-sm: 30px; /** Small control height (32px) */
+  --size-control-md: 34px; /** Medium control height (40px) */
+  --size-control-lg: 48px; /** Large control height (48px) */
+  --size-control-xl: 56px; /** Extra large control height (56px) */
+  --size-font-2xs: 0.625rem; /** 10px */
+  --size-font-xs: 0.75rem; /** 12px */
+  --size-font-sm: 0.875rem; /** 14px */
+  --size-font-base: 1rem; /** 16px */
+  --size-font-md: 1rem; /** 16px */
+  --size-font-lg: 1.25rem; /** 20px */
+  --size-font-xl: 1.5rem; /** 24px */
+  --size-font-2xl: 2rem; /** 32px */
+  --size-font-3xl: 2.25rem; /** 36px */
+  --size-font-4xl: 3rem; /** 48px */
+  --size-font-5xl: 5rem; /** 80px */
+  --size-font-6xl: 6rem; /** 96px */
+  --size-font-inherit: inherit;
+  --size-icon-xs: 12px; /** Extra small icon (12px) */
+  --size-icon-sm: 16px; /** Small icon (16px) */
+  --size-icon-md: 20px; /** Medium icon (20px) */
+  --size-icon-lg: 24px; /** Large icon (24px) */
+  --size-icon-xl: 32px; /** Extra large icon (32px) */
+  --size-icon-2xl: 40px; /** 2x large icon (40px) */
+  --size-line-height-inherit: inherit;
+  --size-line-height-base: 1;
+  --size-line-height-input: 1.25;
+  --size-line-height-heading: 1.25;
+  --size-line-height-text: 1.5;
+  --size-touch-target-min: 44px; /** Minimum touch target (44px - WCAG 2.5.5) */
+  --size-width-0: 0rem;
+  --size-width-10: 10%;
+  --size-width-15: 15%;
+  --size-width-20: 20%;
+  --size-width-25: 25%;
+  --size-width-30: 30%;
+  --size-width-33: 33%;
+  --size-width-34: 34%;
+  --size-width-40: 40%;
+  --size-width-50: 50%;
+  --size-width-60: 60%;
+  --size-width-67: 67%;
+  --size-width-70: 70%;
+  --size-width-75: 75%;
+  --size-width-80: 80%;
+  --size-width-90: 90%;
+  --size-width-100: 100%;
+  --size-width-2xs: 0.75rem; /** 12px */
+  --size-width-xs: 0.875rem; /** 14px */
+  --size-width-sm: 1rem; /** 16px */
+  --size-width-md: 2rem; /** 32px */
+  --size-width-lg: 4rem; /** 64px */
+  --size-width-xl: 8rem; /** 128px */
+  --size-width-2xl: 12rem; /** 192px */
+  --size-width-3xl: 16rem; /** 256px */
+  --size-width-4xl: 32rem; /** 512px */
+  --size-width-5xl: 64rem; /** 1024px */
+  --size-width-6xl: 83rem; /** 1328px */
+  --size-width-auto: auto;
+  --size-width-inherit: inherit;
+  --size-width-full: 100%; /** 100% width */
+  --size-width-screen: 100vw; /** 100vw - full viewport width */
+  --size-width-svw: 100svw; /** 100svw - small viewport width */
+  --size-width-lvw: 100lvw; /** 100lvw - large viewport width */
+  --size-width-dvw: 100dvw; /** 100dvw - dynamic viewport width */
+  --size-width-min: min-content; /** min-content width */
+  --size-width-max: max-content; /** max-content width */
+  --size-width-fit: fit-content; /** fit-content width */
+  --space-0: 0px; /** No spacing */
+  --space-2: 2px; /** 2px spacing */
+  --space-4: 4px; /** 4px spacing */
+  --space-8: 8px; /** 8px spacing */
+  --space-10: 10px; /** 10px spacing */
+  --space-12: 12px; /** 12px spacing */
+  --space-16: 16px; /** 16px spacing */
+  --space-20: 20px; /** 20px spacing */
+  --space-24: 24px; /** 24px spacing */
+  --space-32: 32px; /** 32px spacing */
+  --space-40: 40px; /** 40px spacing */
+  --space-48: 48px; /** 48px spacing */
+  --space-64: 64px; /** 64px spacing */
+  --space-80: 80px; /** 80px spacing */
+  --space-auto: auto; /** Auto spacing */
+  --space-inherit: inherit; /** Inherit spacing */
+  --z-hide: -1; /** Hidden behind base layer */
+  --z-base: 0; /** Base layer */
+  --z-raised: 10; /** Slightly raised elements */
+  --z-dropdown: 1000; /** Dropdown menus */
+  --z-sticky: 1010; /** Sticky headers */
+  --z-fixed: 1020; /** Fixed positioned elements */
+  --z-drawer: 1030; /** Side drawers/panels */
+  --z-modal-backdrop: 1040; /** Modal overlay/backdrop */
+  --z-modal: 1050; /** Modal dialogs */
+  --z-popover: 1060; /** Popovers */
+  --z-tooltip: 1070; /** Tooltips */
+  --z-toast: 1080; /** Toast notifications (top layer) */
+  --component-badge-border-radius: 9999px; /** Badge corner radius (pill shape) */
+  --component-badge-font-size: 0.75rem; /** Badge font size */
+  --component-badge-font-weight: 500; /** Badge font weight */
+  --component-badge-padding-x: 8px; /** Badge horizontal padding */
+  --component-badge-padding-y: 2px; /** Badge vertical padding */
+  --component-badge-success-background: #ecfdf5; /** Success badge background */
+  --component-badge-success-text: #047857; /** Success badge text */
+  --component-badge-success-border: #a7f3d0; /** Success badge border */
+  --component-badge-warning-background: #fffbeb; /** Warning badge background */
+  --component-badge-warning-text: #b45309; /** Warning badge text */
+  --component-badge-warning-border: #fde68a; /** Warning badge border */
+  --component-badge-error-background: #fef2f2; /** Error badge background */
+  --component-badge-error-text: #b91c1c; /** Error badge text */
+  --component-badge-error-border: #fecaca; /** Error badge border */
+  --component-badge-info-background: #eff6ff; /** Info badge background */
+  --component-badge-info-text: #1d4ed8; /** Info badge text */
+  --component-badge-info-border: #bfdbfe; /** Info badge border */
+  --component-badge-neutral-background: #f3f4f6; /** Neutral badge background */
+  --component-badge-neutral-text: #374151; /** Neutral badge text */
+  --component-badge-neutral-border: #d1d5db; /** Neutral badge border */
+  --component-badge-primary-background: #dfdbef; /** Primary badge background */
+  --component-badge-primary-text: #423070; /** Primary badge text */
+  --component-badge-primary-border: #ab9ed6; /** Primary badge border */
+  --component-button-border-radius: 4px; /** Button corner radius */
+  --component-button-font-weight: 500; /** Button text weight */
+  --component-button-transition-duration: 200ms; /** Button animation speed */
+  --component-button-primary-background-default: #5a4295; /** Primary button background */
+  --component-button-primary-background-hover: #423070; /** Primary button hover background */
+  --component-button-primary-background-active: #140c27; /** Primary button active/pressed background */
+  --component-button-primary-background-disabled: #d1d5db; /** Primary button disabled background */
+  --component-button-primary-text: #fcfcfd; /** Primary button text color */
+  --component-button-primary-border: #5a4295; /** Primary button border color */
+  --component-button-secondary-background-default: #fcfcfd; /** Secondary button background */
+  --component-button-secondary-background-hover: #f9fafb; /** Secondary button hover background */
+  --component-button-secondary-text: #5a4295; /** Secondary button text color */
+  --component-button-secondary-border: #5a4295; /** Secondary button border color */
+  --component-button-accent-background-default: #2B2E69; /** Accent/Navy button background */
+  --component-button-accent-background-hover: #1D2050; /** Accent button hover background */
+  --component-button-accent-background-active: #0D1620; /** Accent button active background */
+  --component-button-accent-text: #fcfcfd; /** Accent button text color */
+  --component-button-accent-border: #2B2E69; /** Accent button border color */
+  --component-button-destructive-background-default: #ef4444; /** Destructive button background */
+  --component-button-destructive-background-hover: #B91C1C; /** Destructive button hover background */
+  --component-button-destructive-background-active: #991B1B; /** Destructive button active background */
+  --component-button-destructive-text: #fcfcfd; /** Destructive button text color */
+  --component-button-destructive-border: #ef4444; /** Destructive button border color */
+  --component-button-size-small-height: 30px; /** Small button height */
+  --component-button-size-small-padding-x: 8px; /** Small button horizontal padding */
+  --component-button-size-small-padding-y: 4px; /** Small button vertical padding */
+  --component-button-size-small-font-size: 0.875rem; /** Small button font size */
+  --component-button-size-small-gap: 4px; /** Small button icon gap */
+  --component-button-size-medium-height: 34px; /** Medium button height */
+  --component-button-size-medium-padding-x: 16px; /** Medium button horizontal padding */
+  --component-button-size-medium-padding-y: 8px; /** Medium button vertical padding */
+  --component-button-size-medium-font-size: 1rem; /** Medium button font size */
+  --component-button-size-medium-gap: 8px; /** Medium button icon gap */
+  --component-button-size-large-height: 48px; /** Large button height */
+  --component-button-size-large-padding-x: 24px; /** Large button horizontal padding */
+  --component-button-size-large-padding-y: 12px; /** Large button vertical padding */
+  --component-button-size-large-font-size: 1.25rem; /** Large button font size */
+  --component-button-size-large-gap: 8px; /** Large button icon gap */
+  --component-card-background: #fcfcfd; /** Card background color */
+  --component-card-border-color: #d1d5db; /** Card border color */
+  --component-card-border-width: 1px; /** Card border width */
+  --component-card-border-radius: 8px; /** Card corner radius */
+  --component-card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); /** Card shadow */
+  --component-card-padding: 24px; /** Card body padding */
+  --component-card-header-background: #f9fafb; /** Card header background */
+  --component-card-header-border-color: #e5e7eb; /** Card header border color */
+  --component-card-header-padding-x: 24px; /** Card header horizontal padding */
+  --component-card-header-padding-y: 16px; /** Card header vertical padding */
+  --component-card-footer-background: #f9fafb; /** Card footer background */
+  --component-card-footer-border-color: #e5e7eb; /** Card footer border color */
+  --component-card-footer-padding-x: 24px; /** Card footer horizontal padding */
+  --component-card-footer-padding-y: 16px; /** Card footer vertical padding */
+  --component-card-actions-gap: 12px; /** Gap between action buttons */
+  --component-input-background-default: #fcfcfd; /** Input default background */
+  --component-input-background-disabled: #f9fafb; /** Input disabled background */
+  --component-input-border-color-default: #d1d5db; /** Input default border */
+  --component-input-border-color-hover: #9ca3af; /** Input hover border */
+  --component-input-border-color-focus: #5a4295; /** Input focus border */
+  --component-input-border-color-error: #fecaca; /** Input error border */
+  --component-input-border-color-disabled: #e5e7eb; /** Input disabled border */
+  --component-input-border-width: 1px; /** Input border width */
+  --component-input-border-radius: 4px; /** Input corner radius */
+  --component-input-text-color-default: #111827; /** Input text color */
+  --component-input-text-color-placeholder: #4b5563; /** Input placeholder color */
+  --component-input-text-color-disabled: #9ca3af; /** Input disabled text color */
+  --component-input-font-size: 1rem; /** Input font size */
+  --component-input-line-height: 1.5; /** Input line height */
+  --component-input-size-small-height: 30px; /** Small input height */
+  --component-input-size-small-padding-x: 8px; /** Small input horizontal padding */
+  --component-input-size-small-font-size: 0.875rem; /** Small input font size */
+  --component-input-size-medium-height: 34px; /** Medium input height */
+  --component-input-size-medium-padding-x: 12px; /** Medium input horizontal padding */
+  --component-input-size-medium-font-size: 1rem; /** Medium input font size */
+  --component-input-size-large-height: 48px; /** Large input height */
+  --component-input-size-large-padding-x: 16px; /** Large input horizontal padding */
+  --component-input-size-large-font-size: 1.25rem; /** Large input font size */
+  --component-input-label-font-size: 0.875rem; /** Input label font size */
+  --component-input-label-font-weight: 500; /** Input label font weight */
+  --component-input-label-color: #111827; /** Input label color */
+  --component-input-label-margin-bottom: 4px; /** Space between label and input */
+  --component-input-helper-text-font-size: 0.875rem; /** Helper text font size */
+  --component-input-helper-text-color-default: #4b5563; /** Helper text color */
+  --component-input-helper-text-color-error: #b91c1c; /** Error helper text color */
+  --component-input-helper-text-margin-top: 4px; /** Space between input and helper text */
+  --component-modal-background: #fcfcfd; /** Modal background */
+  --component-modal-border-radius: 12px; /** Modal corner radius */
+  --component-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /** Modal shadow */
+  --component-modal-overlay-background: rgba(0, 0, 0, 0.5); /** Modal backdrop/overlay color */
+  --component-modal-width-small: 400px; /** Small modal width */
+  --component-modal-width-medium: 560px; /** Medium modal width */
+  --component-modal-width-large: 720px; /** Large modal width */
+  --component-modal-width-full: calc(100vw - 64px); /** Full width modal */
+  --component-modal-header-padding: 24px; /** Modal header padding */
+  --component-modal-header-border-color: #e5e7eb; /** Modal header border */
+  --component-modal-body-padding: 24px; /** Modal body padding */
+  --component-modal-footer-padding: 24px; /** Modal footer padding */
+  --component-modal-footer-border-color: #e5e7eb; /** Modal footer border */
+  --component-modal-footer-gap: 12px; /** Gap between footer buttons */
+}

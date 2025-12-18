@@ -1,0 +1,65 @@
+{
+  "name": "salesforce-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Salesforce App with LWC Storybook",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint **/{aura,lwc}/**/*.js",
+    "test": "npm run test:unit",
+    "test:unit": "sfdx-lwc-jest",
+    "test:unit:watch": "sfdx-lwc-jest --watch",
+    "test:unit:debug": "sfdx-lwc-jest --debug",
+    "test:unit:coverage": "sfdx-lwc-jest --coverage",
+    "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "prepare": "husky || true",
+    "precommit": "lint-staged",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
+    "@lwc/compiler": "^8.26.1",
+    "@lwc/engine-dom": "^8.26.1",
+    "@lwc/eslint-plugin-lwc": "^3.1.0",
+    "@lwc/rollup-plugin": "^8.26.1",
+    "@lwc/template-compiler": "^8.26.1",
+    "@prettier/plugin-xml": "^3.4.1",
+    "@salesforce/eslint-config-lwc": "^4.0.0",
+    "@salesforce/eslint-plugin-aura": "^3.0.0",
+    "@salesforce/eslint-plugin-lightning": "^2.0.0",
+    "@salesforce/sfdx-lwc-jest": "^7.0.2",
+    "@storybook/addon-a11y": "^8.4.7",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/test": "^8.4.7",
+    "@storybook/web-components": "^8.4.7",
+    "@storybook/web-components-vite": "^8.4.7",
+    "eslint": "^9.29.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "lit": "^3.3.1",
+    "lit-html": "^3.3.1",
+    "lwc": "^8.26.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-apex": "^2.2.6",
+    "storybook": "^8.4.7",
+    "vite": "^5.4.11",
+    "vite-plugin-lwc": "^4.1.0",
+    "zinc-design-tokens": "^0.0.16"
+  },
+  "lint-staged": {
+    "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
+      "prettier --write"
+    ],
+    "**/{aura,lwc}/**/*.js": [
+      "eslint"
+    ],
+    "**/lwc/**": [
+      "sfdx-lwc-jest -- --bail --findRelatedTests --passWithNoTests"
+    ]
+  }
+}

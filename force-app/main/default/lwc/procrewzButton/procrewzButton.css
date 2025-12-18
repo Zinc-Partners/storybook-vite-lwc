@@ -1,0 +1,136 @@
+/* Button Base Styles */
+.procrewz-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--component-button-size-medium-gap, 8px);
+    border-radius: var(--component-button-border-radius, 4px);
+    font-weight: var(--component-button-font-weight, 500);
+    font-family: var(--font-family-base, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    cursor: pointer;
+    border-width: var(--border-width-1, 1px);
+    border-style: solid;
+    transition: all var(--component-button-transition-duration, 200ms) var(--motion-ease-in-out, ease);
+    line-height: var(--size-line-height-input, 1.25);
+}
+
+/* Primary Variant */
+.procrewz-button.primary {
+    background-color: var(--component-button-primary-background-default, #5a4295);
+    color: var(--component-button-primary-text, #fcfcfd);
+    border-color: var(--component-button-primary-border, #5a4295);
+}
+
+.procrewz-button.primary:hover:not(:disabled) {
+    background-color: var(--component-button-primary-background-hover, #423070);
+}
+
+.procrewz-button.primary:active:not(:disabled) {
+    background-color: var(--component-button-primary-background-active, #140c27);
+}
+
+/* Secondary Variant */
+.procrewz-button.secondary {
+    background-color: var(--component-button-secondary-background-default, #fcfcfd);
+    color: var(--component-button-secondary-text, #5a4295);
+    border-color: var(--component-button-secondary-border, #5a4295);
+}
+
+.procrewz-button.secondary:hover:not(:disabled) {
+    background-color: var(--component-button-secondary-background-hover, #f9fafb);
+}
+
+/* Navy/Accent Variant */
+.procrewz-button.navy {
+    background-color: var(--component-button-accent-background-default, #2B2E69);
+    color: var(--component-button-accent-text, #fcfcfd);
+    border-color: var(--component-button-accent-border, #2B2E69);
+}
+
+.procrewz-button.navy:hover:not(:disabled) {
+    background-color: var(--component-button-accent-background-hover, #1D2050);
+}
+
+.procrewz-button.navy:active:not(:disabled) {
+    background-color: var(--component-button-accent-background-active, #0D1620);
+}
+
+/* Destructive Variant */
+.procrewz-button.destructive {
+    background-color: var(--component-button-destructive-background-default, #ef4444);
+    color: var(--component-button-destructive-text, #fcfcfd);
+    border-color: var(--component-button-destructive-border, #ef4444);
+}
+
+.procrewz-button.destructive:hover:not(:disabled) {
+    background-color: var(--component-button-destructive-background-hover, #B91C1C);
+}
+
+.procrewz-button.destructive:active:not(:disabled) {
+    background-color: var(--component-button-destructive-background-active, #991B1B);
+}
+
+/* Size: Small */
+.procrewz-button.small {
+    height: var(--component-button-size-small-height, 30px);
+    padding: var(--component-button-size-small-padding-y, 4px) var(--component-button-size-small-padding-x, 8px);
+    font-size: var(--component-button-size-small-font-size, 0.875rem);
+    gap: var(--component-button-size-small-gap, 4px);
+}
+
+/* Size: Medium */
+.procrewz-button.medium {
+    height: var(--component-button-size-medium-height, 34px);
+    padding: var(--component-button-size-medium-padding-y, 8px) var(--component-button-size-medium-padding-x, 16px);
+    font-size: var(--component-button-size-medium-font-size, 1rem);
+    gap: var(--component-button-size-medium-gap, 8px);
+}
+
+/* Size: Large */
+.procrewz-button.large {
+    height: var(--component-button-size-large-height, 48px);
+    padding: var(--component-button-size-large-padding-y, 12px) var(--component-button-size-large-padding-x, 24px);
+    font-size: var(--component-button-size-large-font-size, 1.25rem);
+    gap: var(--component-button-size-large-gap, 8px);
+}
+
+/* Disabled State */
+.procrewz-button:disabled,
+.procrewz-button.disabled {
+    opacity: var(--opacity-disabled, 0.5);
+    cursor: not-allowed;
+    background-color: var(--component-button-primary-background-disabled, #d1d5db);
+    border-color: var(--component-button-primary-background-disabled, #d1d5db);
+}
+
+/* Loading State */
+.procrewz-button.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Icon Styles */
+.button-icon {
+    width: var(--size-icon-sm, 16px);
+    height: var(--size-icon-sm, 16px);
+}
+
+/* Focus States */
+.procrewz-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring, #5a4295);
+    outline-offset: 2px;
+}
+

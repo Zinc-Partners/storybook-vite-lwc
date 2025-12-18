@@ -1,0 +1,21 @@
+<template>
+    <c-theme-provider>
+        <button
+            class={buttonClass}
+            onclick={handleClick}
+            disabled={disabled}
+            type={type}
+        >
+            <template lwc:if={loading}>
+                <span class="spinner"></span>
+            </template>
+            <template lwc:if={showIconLeft}>
+                <img src={iconUrl} alt="" class="button-icon" />
+            </template>
+            <span class="button-label">{label}</span>
+            <template lwc:if={showIconRight}>
+                <img src={iconUrl} alt="" class="button-icon" />
+            </template>
+        </button>
+    </c-theme-provider>
+</template>
