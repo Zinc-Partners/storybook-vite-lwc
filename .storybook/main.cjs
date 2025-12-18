@@ -3,15 +3,11 @@ const { createLwcPlugins } = require('./lwc-plugin.cjs');
 module.exports = {
     stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
     addons: [
-        '@storybook/addon-essentials',
-        '@chromatic-com/storybook',
+        '@storybook/addon-a11y',
     ],
     framework: {
         name: '@storybook/web-components-vite',
         options: {},
-    },
-    docs: {
-        autodocs: 'tag',
     },
     viteFinal: async (config) => {
         // Get LWC plugins (patch, alias, lwc)
