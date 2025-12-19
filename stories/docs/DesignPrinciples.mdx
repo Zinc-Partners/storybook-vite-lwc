@@ -1,0 +1,135 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundation/Design Principles" />
+
+# Design Principles
+
+The guiding principles that shape every decision in the Procrewz Design System.
+
+---
+
+## 1. Clarity Over Complexity
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>🎯</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Simple and Intuitive</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Every component should be immediately understandable. Users shouldn't need documentation to figure out basic interactions. When in doubt, choose the simpler solution.
+    </p>
+  </div>
+</div>
+
+---
+
+## 2. Consistency Builds Trust
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>🔄</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Predictable Patterns</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Similar actions should look and behave similarly across all components. Consistency in visual design, interaction patterns, and terminology creates a cohesive experience that users can learn once and apply everywhere.
+    </p>
+  </div>
+</div>
+
+---
+
+## 3. Accessibility is Non-Negotiable
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>♿</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Inclusive by Default</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Every component must be accessible to all users, regardless of ability. We follow WCAG 2.1 AA guidelines as a minimum standard. This includes proper color contrast, keyboard navigation, screen reader support, and focus management.
+    </p>
+  </div>
+</div>
+
+---
+
+## 4. Performance Matters
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>⚡</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Fast and Lightweight</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Components should be optimized for performance. Minimize bundle size, avoid unnecessary re-renders, and use efficient CSS. A beautiful interface means nothing if it's slow to load or interact with.
+    </p>
+  </div>
+</div>
+
+---
+
+## 5. Flexibility Without Fragmentation
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>🧩</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Composable Components</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Components should be flexible enough to handle various use cases while maintaining visual and behavioral consistency. Use design tokens and variants rather than one-off customizations.
+    </p>
+  </div>
+</div>
+
+---
+
+## 6. Design with Intent
+
+<div style={{ display: 'flex', gap: '16px', marginBottom: '32px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+  <div style={{ fontSize: '32px' }}>💜</div>
+  <div>
+    <h4 style={{ margin: '0 0 8px 0', color: '#111827' }}>Every Detail Has Purpose</h4>
+    <p style={{ margin: 0, color: '#4b5563', lineHeight: '1.6' }}>
+      Nothing is arbitrary. Every color, spacing value, and interaction is chosen deliberately. Design decisions should be explainable and tied to user needs or brand expression.
+    </p>
+  </div>
+</div>
+
+---
+
+## Applying These Principles
+
+### When Building Components
+
+- Start with the simplest implementation that solves the problem
+- Ensure keyboard navigation works before adding mouse interactions
+- Use semantic HTML elements as the foundation
+- Test with screen readers and color contrast checkers
+- Document all variants and their intended use cases
+
+### When Making Design Decisions
+
+- Reference existing patterns before creating new ones
+- Validate color choices against WCAG contrast requirements
+- Consider how the change affects the entire system, not just one screen
+- Get feedback from users with different abilities and contexts
+
+---
+
+## Brand Expression
+
+Our design principles come to life through our brand colors:
+
+<div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+  <div style={{ textAlign: 'center' }}>
+    <div style={{ width: '80px', height: '80px', backgroundColor: '#5a4295', borderRadius: '8px' }}></div>
+    <div style={{ fontSize: '12px', fontWeight: '600', marginTop: '8px', color: '#111827' }}>Primary</div>
+    <div style={{ fontSize: '11px', color: '#6b7280' }}>#5a4295</div>
+  </div>
+  <div style={{ textAlign: 'center' }}>
+    <div style={{ width: '80px', height: '80px', backgroundColor: '#9B4B95', borderRadius: '8px' }}></div>
+    <div style={{ fontSize: '12px', fontWeight: '600', marginTop: '8px', color: '#111827' }}>Secondary</div>
+    <div style={{ fontSize: '11px', color: '#6b7280' }}>#9B4B95</div>
+  </div>
+  <div style={{ textAlign: 'center' }}>
+    <div style={{ width: '80px', height: '80px', backgroundColor: '#2B2E69', borderRadius: '8px' }}></div>
+    <div style={{ fontSize: '12px', fontWeight: '600', marginTop: '8px', color: '#111827' }}>Accent</div>
+    <div style={{ fontSize: '11px', color: '#6b7280' }}>#2B2E69</div>
+  </div>
+</div>
+

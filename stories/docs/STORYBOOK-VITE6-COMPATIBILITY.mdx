@@ -1,0 +1,361 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Content/Storybook + LWC Compatibility" />
+
+# Storybook + Lightning Web Components (LWC) Compatibility Guide
+
+## Overview
+
+This document details the compatibility issues encountered when trying to deploy **Storybook 10 with Vite 6** and **Lightning Web Components (LWC)**, and explains why we reverted to **Storybook 8 with Webpack + Rollup pre-compilation**.
+
+---
+
+## The Problem: Storybook 10 + Vite 6 + LWC
+
+### Initial Attempt
+
+We initially tried to use the latest stack:
+- Storybook 10.1.10
+- Vite 6.4.1
+- vite-plugin-lwc 4.1.0
+- @storybook/web-components-vite 10.1.10
+
+**Dev mode worked**, but **production builds consistently failed**.
+
+### Issues Encountered
+
+#### Issue 1: HTML File Parsed as JavaScript
+
+```
+node_modules/@storybook/builder-vite/input/iframe.html?import (1:0): 
+Expression expected (Note that you need plugins to import files that are not JavaScript)
+
+1: <!doctype html>
+   ^
+```
+
+Vite 6 changed how it handles imports with query strings (`?import`). During production builds, Rollup attempted to parse Storybook's internal `iframe.html` as JavaScript instead of HTML.
+
+#### Issue 2: LWC Plugin Processing Vite Virtual Modules
+
+```
+[lwc:vite-plugin] __vite-optional-peer-dep:msw/browser:@vitest/mocker (1:1): 
+LWC1005: No available transformer for "__vite-optional-peer-dep:msw/browser:@vitest/mocker"
+```
+
+The `vite-plugin-lwc` attempted to transform Vite's internal virtual modules (prefixed with `__vite`), causing build failures.
+
+#### Issue 3: Missing Root Template Tag
+
+```
+LWC1072: Missing root template tag
+File: ./force-app/main/default/lwc/procrewzButton/procrewzButton.html:0:0
+```
+
+Some workarounds caused Vite to strip the `<template>` tags from LWC HTML files, breaking the components.
+
+### Failed Workarounds
+
+We tried multiple approaches:
+1. Custom Vite plugins to intercept `iframe.html?import`
+2. Wrapping the LWC plugin's transform function
+3. Adding virtual module stubs
+4. Excluding patterns from the LWC plugin
+
+**None of these provided a stable, consistent solution.** Each fix introduced new edge cases or broke other functionality.
+
+---
+
+## The Solution: Storybook 8 + Webpack + Rollup
+
+After extensive troubleshooting, we adopted a proven architecture using:
+
+- **Storybook 8.6.x** with `@storybook/web-components-webpack5`
+- **Rollup** to pre-compile LWC components before Storybook runs
+- **Webpack** for Storybook's dev server and production build
+
+### Why This Works
+
+| Aspect | Vite Approach (Failed) | Webpack + Rollup (Working) |
+|--------|----------------------|---------------------------|
+| LWC Compilation | Runtime via vite-plugin-lwc | Pre-compiled via @lwc/rollup-plugin |
+| Build Stability | Inconsistent, many edge cases | Stable, proven architecture |
+| Component Registration | Complex, timing-dependent | Simple, upfront registration |
+| Virtual Module Handling | Conflicts with LWC plugin | Not applicable |
+| Storybook Compatibility | Bleeding edge, unstable | Mature, well-tested |
+
+---
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        Build Process                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  1. npm run storybook:build                                     │
+│     └─→ Rollup compiles LWC components                          │
+│         └─→ .storybook/build/main-storybook.js                  │
+│                                                                  │
+│  2. storybook dev / storybook build                             │
+│     └─→ Webpack bundles everything                              │
+│         └─→ Imports pre-compiled LWC bundle                     │
+│         └─→ Serves/builds Storybook                             │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Configuration Files
+
+### package.json Scripts
+
+```json
+{
+  "scripts": {
+    "storybook:build": "rollup -c .storybook/rollup.config.js",
+    "storybook": "npm run storybook:build && storybook dev -p 6006",
+    "build-storybook": "npm run storybook:build && storybook build"
+  }
+}
+```
+
+### .storybook/rollup.config.js
+
+```javascript
+import path from 'path';
+import { fileURLToPath } from 'url';
+import lwcRollupPlugin from '@lwc/rollup-plugin';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, '..');
+
+// Custom plugin to resolve 'c/' namespace imports
+const lwcNamespaceResolver = () => ({
+  name: 'lwc-namespace-resolver',
+  resolveId(source) {
+    if (source.startsWith('c/')) {
+      const componentName = source.substring(2);
+      return path.resolve(
+        projectRoot, 
+        `force-app/main/default/lwc/${componentName}/${componentName}.js`
+      );
+    }
+    return null;
+  }
+});
+
+export default {
+  input: path.resolve(__dirname, '../stories/index.js'),
+  output: {
+    file: path.resolve(__dirname, 'build/main-storybook.js'),
+    format: 'esm',
+  },
+  plugins: [
+    lwcNamespaceResolver(),
+    lwcRollupPlugin({
+      rootDir: projectRoot,
+      modules: [
+        { dir: path.resolve(projectRoot, 'stories') },
+        { dir: path.resolve(projectRoot, 'force-app/main/default/lwc') }
+      ]
+    }),
+    nodeResolve(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      preventAssignment: true
+    })
+  ]
+};
+```
+
+### stories/index.js
+
+```javascript
+// Import LWC components using c/ namespace
+import ProcrewzButton from 'c/procrewzButton';
+import ProcrewzCard from 'c/procrewzCard';
+import ProcrewzInput from 'c/procrewzInput';
+import ProcrewzModal from 'c/procrewzModal';
+
+// Register components as custom elements
+function registerComponent(elementName, elementClass) {
+  if (!customElements.get(elementName)) {
+    customElements.define(elementName, elementClass.CustomElementConstructor);
+  }
+}
+
+registerComponent('c-procrewz-button', ProcrewzButton);
+registerComponent('c-procrewz-card', ProcrewzCard);
+registerComponent('c-procrewz-input', ProcrewzInput);
+registerComponent('c-procrewz-modal', ProcrewzModal);
+
+export { ProcrewzButton, ProcrewzCard, ProcrewzInput, ProcrewzModal };
+```
+
+### .storybook/main.js
+
+```javascript
+const path = require('path');
+
+module.exports = {
+  stories: [
+    "../stories/**/*.mdx",
+    "../stories/**/*.stories.js"
+  ],
+  
+  addons: [
+    "@storybook/addon-essentials",
+    "@storybook/addon-docs",
+  ],
+  
+  framework: {
+    name: "@storybook/web-components-webpack5",
+    options: {}
+  },
+
+  docs: {
+    autodocs: true
+  },
+
+  webpackFinal: async (config) => {
+    const rootDir = path.resolve(__dirname, '..');
+    
+    config.resolve = config.resolve || {};
+    config.resolve.alias = config.resolve.alias || {};
+    
+    // LWC version consistency
+    config.resolve.alias['lwc'] = require.resolve('lwc');
+    config.resolve.alias['@lwc/synthetic-shadow'] = require.resolve('@lwc/synthetic-shadow');
+    
+    // Exclude LWC CSS from Storybook's default processing
+    config.module.rules.forEach(rule => {
+      if (rule.test && rule.test.toString().includes('css')) {
+        rule.exclude = rule.exclude || [];
+        rule.exclude.push(/force-app\/main\/default\/lwc/);
+      }
+    });
+    
+    return config;
+  }
+};
+```
+
+### .storybook/preview.js
+
+```javascript
+// Import the pre-compiled LWC bundle
+import './build/main-storybook';
+
+// Import design tokens
+import 'zinc-design-tokens/web';
+
+const preview = {
+  parameters: {
+    layout: "centered",
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+  },
+};
+
+export default preview;
+```
+
+---
+
+## Story Files: Key Difference
+
+### ❌ Wrong: Importing LWC directly in stories
+
+```javascript
+// This breaks with Webpack - it can't process LWC files!
+import ProcrewzButton from '@components/procrewzButton/procrewzButton.js';
+import { registerLWC } from '../utils/lwc-renderer.js';
+
+registerLWC('c-procrewz-button', ProcrewzButton);
+```
+
+### ✅ Correct: Components pre-registered, just use tags
+
+```javascript
+// Components are already registered via index.js → Rollup → preview.js
+// Just use the custom element tags directly!
+
+export default {
+  title: 'Components/Button',
+  component: 'c-procrewz-button',
+};
+
+export const Primary = {
+  render: () => {
+    const el = document.createElement('c-procrewz-button');
+    el.label = 'Primary Button';
+    el.variant = 'primary';
+    return el;
+  }
+};
+```
+
+---
+
+## Vercel Deployment
+
+### vercel.json
+
+```json
+{
+  "buildCommand": "npm run build-storybook",
+  "outputDirectory": "storybook-static",
+  "framework": null,
+  "installCommand": "npm install --legacy-peer-deps"
+}
+```
+
+### .nvmrc
+
+```
+20
+```
+
+---
+
+## Key Takeaways
+
+1. **Bleeding edge isn't always better** — Storybook 10 + Vite 6 + LWC had too many incompatibilities
+2. **Pre-compilation is reliable** — Using Rollup to compile LWC before Storybook runs eliminates runtime conflicts
+3. **Webpack is battle-tested** — The Webpack-based Storybook framework is more mature for web components
+4. **Keep components and stories separate** — Stories should just use pre-registered custom elements, not import LWC directly
+5. **`c/` namespace resolution** — A custom Rollup plugin handles Salesforce's `c/componentName` import pattern
+
+---
+
+## Dependencies
+
+```json
+{
+  "devDependencies": {
+    "@lwc/rollup-plugin": "^8.26.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-replace": "^5.0.0",
+    "@storybook/addon-docs": "^8.6.12",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/builder-webpack5": "^8.6.12",
+    "@storybook/web-components-webpack5": "^8.6.12",
+    "rollup": "^4.0.0",
+    "storybook": "^8.6.12"
+  }
+}
+```
+
+---
+
+*Document updated: December 2025*  
+*Working Stack: Storybook 8.6.x | Webpack 5 | Rollup 4 | @lwc/rollup-plugin 8.x*

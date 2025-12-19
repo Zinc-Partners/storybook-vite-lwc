@@ -1,136 +1,354 @@
-/* Button Base Styles */
+/* Base Button */
 .procrewz-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--component-button-size-medium-gap, 8px);
-    border-radius: var(--component-button-border-radius, 4px);
-    font-weight: var(--component-button-font-weight, 500);
-    font-family: var(--font-family-base, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-    cursor: pointer;
-    border-width: var(--border-width-1, 1px);
-    border-style: solid;
-    transition: all var(--component-button-transition-duration, 200ms) var(--motion-ease-in-out, ease);
-    line-height: var(--size-line-height-input, 1.25);
+  /* Typography */
+  font-family: var(--font-family-base);
+  font-size: var(
+    --size-font-sm,
+    0.875rem
+  ); /* 14px - consistent across sizes like Shadcn */
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--size-line-height-input, 1.15);
+
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8, 8px);
+
+  /* Sizing */
+  padding: var(--space-8, 8px) var(--space-16, 16px);
+  border-radius: var(--radius-6, 6px);
+  border: var(--border-width-1, 1px) solid transparent;
+
+  /* Prevent layout issues */
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  /* Appearance */
+  cursor: pointer;
+  background-color: var(--color-surface-default, #fcfcfd);
+  color: var(--color-text-default);
+  box-shadow: var(--shadow-xs, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+
+  /* Transitions */
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: var(--duration-150, 150ms);
+  transition-timing-function: var(
+    --motion-ease-in-out,
+    cubic-bezier(0.4, 0, 0.2, 1)
+  );
+
+  /* Focus handling */
+  outline: none;
 }
 
-/* Primary Variant */
-.procrewz-button.primary {
-    background-color: var(--component-button-primary-background-default, #5a4295);
-    color: var(--component-button-primary-text, #fcfcfd);
-    border-color: var(--component-button-primary-border, #5a4295);
-}
-
-.procrewz-button.primary:hover:not(:disabled) {
-    background-color: var(--component-button-primary-background-hover, #423070);
-}
-
-.procrewz-button.primary:active:not(:disabled) {
-    background-color: var(--component-button-primary-background-active, #140c27);
-}
-
-/* Secondary Variant */
-.procrewz-button.secondary {
-    background-color: var(--component-button-secondary-background-default, #fcfcfd);
-    color: var(--component-button-secondary-text, #5a4295);
-    border-color: var(--component-button-secondary-border, #5a4295);
-}
-
-.procrewz-button.secondary:hover:not(:disabled) {
-    background-color: var(--component-button-secondary-background-hover, #f9fafb);
-}
-
-/* Navy/Accent Variant */
-.procrewz-button.navy {
-    background-color: var(--component-button-accent-background-default, #2B2E69);
-    color: var(--component-button-accent-text, #fcfcfd);
-    border-color: var(--component-button-accent-border, #2B2E69);
-}
-
-.procrewz-button.navy:hover:not(:disabled) {
-    background-color: var(--component-button-accent-background-hover, #1D2050);
-}
-
-.procrewz-button.navy:active:not(:disabled) {
-    background-color: var(--component-button-accent-background-active, #0D1620);
-}
-
-/* Destructive Variant */
-.procrewz-button.destructive {
-    background-color: var(--component-button-destructive-background-default, #ef4444);
-    color: var(--component-button-destructive-text, #fcfcfd);
-    border-color: var(--component-button-destructive-border, #ef4444);
-}
-
-.procrewz-button.destructive:hover:not(:disabled) {
-    background-color: var(--component-button-destructive-background-hover, #B91C1C);
-}
-
-.procrewz-button.destructive:active:not(:disabled) {
-    background-color: var(--component-button-destructive-background-active, #991B1B);
-}
-
-/* Size: Small */
-.procrewz-button.small {
-    height: var(--component-button-size-small-height, 30px);
-    padding: var(--component-button-size-small-padding-y, 4px) var(--component-button-size-small-padding-x, 8px);
-    font-size: var(--component-button-size-small-font-size, 0.875rem);
-    gap: var(--component-button-size-small-gap, 4px);
-}
-
-/* Size: Medium */
-.procrewz-button.medium {
-    height: var(--component-button-size-medium-height, 34px);
-    padding: var(--component-button-size-medium-padding-y, 8px) var(--component-button-size-medium-padding-x, 16px);
-    font-size: var(--component-button-size-medium-font-size, 1rem);
-    gap: var(--component-button-size-medium-gap, 8px);
-}
-
-/* Size: Large */
-.procrewz-button.large {
-    height: var(--component-button-size-large-height, 48px);
-    padding: var(--component-button-size-large-padding-y, 12px) var(--component-button-size-large-padding-x, 24px);
-    font-size: var(--component-button-size-large-font-size, 1.25rem);
-    gap: var(--component-button-size-large-gap, 8px);
-}
-
-/* Disabled State */
-.procrewz-button:disabled,
-.procrewz-button.disabled {
-    opacity: var(--opacity-disabled, 0.5);
-    cursor: not-allowed;
-    background-color: var(--component-button-primary-background-disabled, #d1d5db);
-    border-color: var(--component-button-primary-background-disabled, #d1d5db);
-}
-
-/* Loading State */
-.procrewz-button.loading {
-    position: relative;
-    pointer-events: none;
-}
-
-.spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid transparent;
-    border-top-color: currentColor;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Icon Styles */
-.button-icon {
-    width: var(--size-icon-sm, 16px);
-    height: var(--size-icon-sm, 16px);
-}
-
-/* Focus States */
+/* Focus Ring (Shadcn style - 3px ring with offset) */
 .procrewz-button:focus-visible {
-    outline: 2px solid var(--color-focus-ring, #5a4295);
-    outline-offset: 2px;
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
 }
 
+/* Hover - subtle, no transform lift */
+.procrewz-button:hover:not(:disabled):not(.procrewz-button--loading) {
+  box-shadow: var(--shadow-sm, 0 1px 3px 0 rgba(0, 0, 0, 0.1));
+}
+
+/* Active/Pressed */
+.procrewz-button:active:not(:disabled):not(.procrewz-button--loading) {
+  box-shadow: none;
+}
+
+/* Disabled */
+.procrewz-button:disabled,
+.procrewz-button--disabled {
+  opacity: var(--opacity-disabled, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ================================
+   VARIANTS
+================================ */
+
+/* PRIMARY (Brand Purple) */
+.procrewz-button--primary {
+  background-color: var(--color-primary-default, #5a4295);
+  color: var(--color-text-inverse, #fff);
+  border-color: var(--color-primary-default, #5a4295);
+}
+
+.procrewz-button--primary:hover:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-primary-hover, #423070);
+  border-color: var(--color-primary-hover, #423070);
+}
+
+.procrewz-button--primary:active:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-primary-active, #140c27);
+  border-color: var(--color-primary-active, #140c27);
+}
+
+/* SECONDARY (Outlined) */
+.procrewz-button--secondary {
+  background-color: var(--color-surface-default, #fcfcfd);
+  color: var(--color-text-default, #111827);
+  border-color: var(--color-border-default, #d1d5db);
+  border-width: var(--border-width-1, 1px);
+}
+
+.procrewz-button--secondary:hover:not(:disabled):not(
+    .procrewz-button--loading
+  ) {
+  background-color: var(--color-background-subtle, #f9fafb);
+}
+
+.procrewz-button--secondary:active:not(:disabled):not(
+    .procrewz-button--loading
+  ) {
+  background-color: var(--color-background-hover, #f3f4f6);
+}
+
+/* NAVY (Accent) */
+.procrewz-button--navy {
+  background-color: var(--color-accent-default, #2b2e69);
+  color: var(--color-text-inverse, #fff);
+  border-color: var(--color-accent-default, #2b2e69);
+}
+
+.procrewz-button--navy:hover:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-accent-hover, #1d2050);
+  border-color: var(--color-accent-hover, #1d2050);
+}
+
+.procrewz-button--navy:active:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-accent-active, #0d1620);
+  border-color: var(--color-accent-active, #0d1620);
+}
+
+/* DESTRUCTIVE */
+.procrewz-button--destructive {
+  background-color: var(--color-destructive-default, #dc2626);
+  color: var(--color-text-inverse, #fff);
+  border-color: var(--color-destructive-default, #dc2626);
+}
+
+.procrewz-button--destructive:hover:not(:disabled):not(
+    .procrewz-button--loading
+  ) {
+  background-color: var(--color-destructive-hover, #b91c1c);
+  border-color: var(--color-destructive-hover, #b91c1c);
+}
+
+.procrewz-button--destructive:active:not(:disabled):not(
+    .procrewz-button--loading
+  ) {
+  background-color: var(--color-destructive-active, #991b1b);
+  border-color: var(--color-destructive-active, #991b1b);
+}
+
+/* GHOST (Text only, no background or shadow) */
+.procrewz-button--ghost {
+  background-color: transparent;
+  color: var(--color-text-default, #111827);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.procrewz-button--ghost:hover:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-background-hover, #f3f4f6);
+  box-shadow: none;
+}
+
+.procrewz-button--ghost:active:not(:disabled):not(.procrewz-button--loading) {
+  background-color: var(--color-background-subtle, #e5e7eb);
+  box-shadow: none;
+}
+
+.procrewz-button--ghost:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+/* ================================
+   SIZES (Shadcn-inspired)
+================================ */
+
+/* Small: h-8 (32px), px-3 (12px), gap-1.5 (6px) */
+.procrewz-button--small {
+  height: var(--size-control-sm, 32px);
+  padding: 0 var(--space-12, 12px);
+  gap: var(--space-4, 6px);
+  font-size: var(--size-font-sm, 0.875rem);
+}
+
+/* Medium/Default: h-9 (36px), px-4 (16px), gap-2 (8px) */
+.procrewz-button--medium {
+  height: var(--size-control-md, 36px);
+  padding: 0 var(--space-16, 16px);
+  gap: var(--space-8, 8px);
+  font-size: var(--size-font-sm, 0.875rem);
+}
+
+/* Large: h-10 (40px), px-6 (24px), gap-2 (8px) */
+.procrewz-button--large {
+  height: var(--size-control-lg, 40px);
+  padding: 0 var(--space-24, 24px);
+  gap: var(--space-8, 8px);
+  font-size: var(--size-font-sm, 0.875rem);
+}
+
+/* ================================
+   MODIFIERS
+================================ */
+
+/* Full Width */
+.procrewz-button--full-width {
+  width: 100%;
+}
+
+/* Icon Only - square buttons */
+.procrewz-button--icon-only {
+  padding: 0;
+  aspect-ratio: 1;
+}
+
+.procrewz-button--icon-only.procrewz-button--small {
+  width: var(--size-control-sm, 32px);
+  height: var(--size-control-sm, 32px);
+}
+
+.procrewz-button--icon-only.procrewz-button--medium {
+  width: var(--size-control-md, 36px);
+  height: var(--size-control-md, 36px);
+}
+
+.procrewz-button--icon-only.procrewz-button--large {
+  width: var(--size-control-lg, 40px);
+  height: var(--size-control-lg, 40px);
+}
+
+/* With Icon - tighter padding (Shadcn: has-[>svg]:px-*) */
+.procrewz-button--has-icon.procrewz-button--small {
+  padding-left: var(--space-10, 10px);
+  padding-right: var(--space-10, 10px);
+}
+
+.procrewz-button--has-icon.procrewz-button--medium {
+  padding-left: var(--space-12, 12px);
+  padding-right: var(--space-12, 12px);
+}
+
+.procrewz-button--has-icon.procrewz-button--large {
+  padding-left: var(--space-16, 16px);
+  padding-right: var(--space-16, 16px);
+}
+
+/* ================================
+   ICON STYLES
+================================ */
+
+.procrewz-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.procrewz-button__icon-img {
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Icon sizes per button size */
+.procrewz-button--small .procrewz-button__icon-img {
+  width: var(--size-icon-sm, 14px);
+  height: var(--size-icon-sm, 14px);
+}
+
+.procrewz-button--medium .procrewz-button__icon-img {
+  width: var(--size-icon-sm, 16px);
+  height: var(--size-icon-sm, 16px);
+}
+
+.procrewz-button--large .procrewz-button__icon-img {
+  width: var(--size-icon-md, 18px);
+  height: var(--size-icon-md, 18px);
+}
+
+/* Icon colors - use filters since <img> can't inherit currentColor */
+/* White icons for dark backgrounds */
+.procrewz-button--primary .procrewz-button__icon-img,
+.procrewz-button--navy .procrewz-button__icon-img,
+.procrewz-button--destructive .procrewz-button__icon-img {
+  filter: brightness(0) invert(1);
+}
+
+/* Brand purple icon for secondary (outlined) variant */
+.procrewz-button--secondary .procrewz-button__icon-img {
+  filter: brightness(0) saturate(100%) invert(26%) sepia(50%) saturate(1500%)
+    hue-rotate(230deg) brightness(90%) contrast(90%);
+}
+
+/* ================================
+   LOADING STATE
+================================ */
+
+.procrewz-button--loading {
+  pointer-events: none;
+  cursor: wait;
+}
+
+.procrewz-button__spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.procrewz-button__spinner-svg {
+  animation: procrewzSpin 0.75s linear infinite;
+}
+
+.procrewz-button__spinner-circle {
+  animation: procrewzSpinDash 1.5s ease-in-out infinite;
+}
+
+/* Spinner sizes */
+.procrewz-button--small .procrewz-button__spinner-svg {
+  width: var(--size-icon-sm, 14px);
+  height: var(--size-icon-sm, 14px);
+}
+
+.procrewz-button--medium .procrewz-button__spinner-svg {
+  width: var(--size-icon-sm, 16px);
+  height: var(--size-icon-sm, 16px);
+}
+
+.procrewz-button--large .procrewz-button__spinner-svg {
+  width: var(--size-icon-md, 18px);
+  height: var(--size-icon-md, 18px);
+}
+
+@keyframes procrewzSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes procrewzSpinDash {
+  0% {
+    stroke-dashoffset: 32;
+  }
+  50% {
+    stroke-dashoffset: 8;
+  }
+  100% {
+    stroke-dashoffset: 32;
+  }
+}

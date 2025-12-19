@@ -1,0 +1,50 @@
+<template>
+  <c-theme-provider>
+    <dialog
+      class={modalClass}
+      aria-labelledby="modal-title"
+      onclick={handleBackdropClick}
+    >
+      <div class="procrewz-modal__container">
+        <!-- Header -->
+        <template lwc:if={showHeader}>
+          <header class="procrewz-modal__header">
+            <template lwc:if={title}>
+              <h2 id="modal-title" class="procrewz-modal__title">{title}</h2>
+            </template>
+            <template lwc:if={showCloseButton}>
+              <button
+                type="button"
+                class="procrewz-modal__close"
+                aria-label="Close modal"
+                onclick={handleCloseClick}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </template>
+          </header>
+        </template>
+
+        <!-- Body -->
+        <div class="procrewz-modal__body">
+          <slot></slot>
+        </div>
+
+        <!-- Footer (optional, via slot) -->
+        <div class="procrewz-modal__footer">
+          <slot name="footer"></slot>
+        </div>
+      </div>
+    </dialog>
+  </c-theme-provider>
+</template>

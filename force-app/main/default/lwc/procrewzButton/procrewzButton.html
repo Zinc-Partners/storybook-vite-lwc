@@ -1,21 +1,72 @@
 <template>
-    <c-theme-provider>
-        <button
-            class={buttonClass}
-            onclick={handleClick}
-            disabled={disabled}
-            type={type}
+  <c-theme-provider>
+    <button
+      class={computedClass}
+      type={type}
+      disabled={isDisabled}
+      onclick={handleClick}
+      onfocus={handleFocus}
+      onblur={handleBlur}
+    >
+      <!-- Loading Spinner -->
+      <template if:true={loading}>
+        <span class="procrewz-button__spinner" aria-hidden="true">
+          <svg
+            class="procrewz-button__spinner-svg"
+            viewBox="0 0 24 24"
+            width={spinnerSize}
+            height={spinnerSize}
+          >
+            <circle
+              class="procrewz-button__spinner-circle"
+              cx="12"
+              cy="12"
+              r="10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="32"
+              stroke-dashoffset="32"
+            ></circle>
+          </svg>
+        </span>
+      </template>
+
+      <!-- Left Icon -->
+      <template if:true={showIconLeft}>
+        <span
+          class="procrewz-button__icon procrewz-button__icon--left"
+          aria-hidden="true"
         >
-            <template lwc:if={loading}>
-                <span class="spinner"></span>
-            </template>
-            <template lwc:if={showIconLeft}>
-                <img src={iconUrl} alt="" class="button-icon" />
-            </template>
-            <span class="button-label">{label}</span>
-            <template lwc:if={showIconRight}>
-                <img src={iconUrl} alt="" class="button-icon" />
-            </template>
-        </button>
-    </c-theme-provider>
+          <img
+            class="procrewz-button__icon-img"
+            src={iconUrl}
+            width={iconSize}
+            height={iconSize}
+          />
+        </span>
+      </template>
+
+      <!-- Button Label -->
+      <template if:true={label}>
+        <span class="procrewz-button__label">{label}</span>
+      </template>
+
+      <!-- Right Icon -->
+      <template if:true={showIconRight}>
+        <span
+          class="procrewz-button__icon procrewz-button__icon--right"
+          aria-hidden="true"
+        >
+          <img
+            class="procrewz-button__icon-img"
+            src={iconUrl}
+            width={iconSize}
+            height={iconSize}
+          />
+        </span>
+      </template>
+    </button>
+  </c-theme-provider>
 </template>

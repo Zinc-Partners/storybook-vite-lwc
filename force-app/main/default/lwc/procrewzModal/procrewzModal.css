@@ -1,0 +1,263 @@
+/* Backdrop */
+dialog::backdrop {
+  background-color: var(--color-surface-overlay, rgba(0, 0, 0, 0.5));
+  opacity: 0;
+  /* Fast exit for backdrop */
+  transition:
+    opacity var(--duration-150, 150ms) var(--motion-ease-in, ease-in),
+    overlay var(--duration-150, 150ms) allow-discrete,
+    display var(--duration-150, 150ms) allow-discrete;
+}
+
+dialog[open]::backdrop {
+  opacity: 1;
+  /* Smooth entrance for backdrop */
+  transition: opacity var(--duration-200, 200ms)
+    var(--motion-ease-out, ease-out);
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Dialog Base */
+.procrewz-modal {
+  position: fixed;
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-height: calc(100vh - var(--space-64, 64px));
+  max-width: calc(100vw - var(--space-32, 32px));
+
+  /* Animation properties */
+  opacity: 0;
+  scale: 0.95;
+
+  /* 
+     * Close animation: faster (150ms) with ease-in for snappy exit
+     * Open animation uses @starting-style below
+     */
+  transition:
+    opacity var(--duration-150, 150ms) var(--motion-ease-in, ease-in),
+    scale var(--duration-150, 150ms) var(--motion-ease-in, ease-in),
+    overlay var(--duration-150, 150ms) allow-discrete,
+    display var(--duration-150, 150ms) allow-discrete;
+}
+
+.procrewz-modal[open] {
+  opacity: 1;
+  scale: 1;
+
+  /* Open animation: slower (200ms) with ease-out for smooth entrance */
+  transition:
+    opacity var(--duration-200, 200ms) var(--motion-ease-out, ease-out),
+    scale var(--duration-200, 200ms) var(--motion-ease-out, ease-out);
+}
+
+@starting-style {
+  .procrewz-modal[open] {
+    opacity: 0;
+    scale: 0.95;
+  }
+}
+
+/* Size Variants */
+.procrewz-modal--small {
+  width: var(--component-modal-width-small, 400px);
+}
+
+.procrewz-modal--medium {
+  width: var(--component-modal-width-medium, 560px);
+}
+
+.procrewz-modal--large {
+  width: var(--component-modal-width-large, 720px);
+}
+
+.procrewz-modal--full {
+  width: var(--component-modal-width-full, calc(100vw - 64px));
+}
+
+/* Container */
+.procrewz-modal__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(
+    --component-modal-background,
+    var(--color-surface-raised, #fff)
+  );
+  border-radius: var(--component-modal-border-radius, var(--radius-12, 12px));
+  box-shadow: var(--component-modal-shadow, var(--shadow-xl));
+  overflow: hidden;
+  font-family: var(--font-family-base);
+}
+
+/* Header */
+.procrewz-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-12, 12px) var(--space-24, 24px);
+  border-bottom: var(--border-width-1, 1px) solid
+    var(
+      --component-modal-header-border-color,
+      var(--color-border-subtle, #e5e7eb)
+    );
+}
+
+.procrewz-modal__title {
+  margin: 0;
+  font-size: var(--size-font-lg, 1.25rem);
+  font-weight: var(--font-weight-semibold, 600);
+  color: var(--color-text-default, #111827);
+  line-height: var(--size-line-height-heading, 1.25);
+}
+
+.procrewz-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-32, 32px);
+  height: var(--space-32, 32px);
+  padding: 0;
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-6, 6px);
+  color: var(--color-icon-default, #6b7280);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-150, 150ms) var(--motion-ease-out, ease-out),
+    color var(--duration-150, 150ms) var(--motion-ease-out, ease-out);
+}
+
+.procrewz-modal__close:hover {
+  background-color: var(--color-background-hover, #f3f4f6);
+  color: var(--color-text-default, #111827);
+}
+
+.procrewz-modal__close:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+.procrewz-modal__close svg {
+  width: var(--space-20, 20px);
+  height: var(--space-20, 20px);
+}
+
+/* Body */
+.procrewz-modal__body {
+  padding: var(--component-modal-body-padding, var(--space-24, 24px));
+  overflow-y: auto;
+  color: var(--color-text-default, #111827);
+  font-size: var(--size-font-sm, 0.875rem);
+  line-height: var(--size-line-height-text, 1.5);
+}
+
+/* Footer */
+.procrewz-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--component-modal-footer-gap, var(--space-12, 12px));
+  padding: var(--space-16, 16px) var(--space-24, 24px);
+  border-top: var(--border-width-1, 1px) solid
+    var(
+      --component-modal-footer-border-color,
+      var(--color-border-subtle, #e5e7eb)
+    );
+}
+
+/* Hide footer if empty */
+.procrewz-modal__footer:empty {
+  display: none;
+}
+
+/* ================================
+   MOBILE DRAWER MODE
+   On screens < 640px, modal becomes a bottom drawer
+================================ */
+
+@media (max-width: 639px) {
+  /* Dialog becomes bottom sheet */
+  .procrewz-modal {
+    position: fixed;
+    margin: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh;
+    max-height: 90dvh;
+
+    /* Slide up animation instead of scale */
+    opacity: 0;
+    scale: 1;
+    transform: translateY(100%);
+
+    transition:
+      opacity var(--duration-200, 200ms) var(--motion-ease-in, ease-in),
+      transform var(--duration-200, 200ms) var(--motion-ease-in, ease-in),
+      overlay var(--duration-200, 200ms) allow-discrete,
+      display var(--duration-200, 200ms) allow-discrete;
+  }
+
+  .procrewz-modal[open] {
+    opacity: 1;
+    transform: translateY(0);
+
+    transition:
+      opacity var(--duration-300, 300ms) var(--motion-ease-out, ease-out),
+      transform var(--duration-300, 300ms) var(--motion-ease-out, ease-out);
+  }
+
+  @starting-style {
+    .procrewz-modal[open] {
+      opacity: 0;
+      transform: translateY(100%);
+      scale: 1;
+    }
+  }
+
+  /* All size variants become full width on mobile */
+  .procrewz-modal--small,
+  .procrewz-modal--medium,
+  .procrewz-modal--large,
+  .procrewz-modal--full {
+    width: 100%;
+  }
+
+  /* Container adjustments for drawer */
+  .procrewz-modal__container {
+    border-radius: var(--radius-16, 16px) var(--radius-16, 16px) 0 0;
+    min-height: var(--component-modal-width-small, 400px);
+    min-height: 50svh;
+    min-height: 50dvh;
+  }
+
+  /* Body scrolls within drawer */
+  .procrewz-modal__body {
+    overflow-y: auto;
+    padding: var(--space-16, 16px);
+  }
+
+  /* Reduce padding on mobile */
+  .procrewz-modal__header {
+    padding: var(--space-8, 8px) var(--space-16, 16px);
+  }
+
+  .procrewz-modal__footer {
+    padding: var(--space-16, 16px);
+    /* Safe area for devices with home indicator */
+    padding-bottom: max(var(--space-16, 16px), env(safe-area-inset-bottom));
+  }
+}

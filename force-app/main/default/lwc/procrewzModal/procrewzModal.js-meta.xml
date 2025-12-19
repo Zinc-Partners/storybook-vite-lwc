@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Procrewz Modal</masterLabel>
+    <description
+  >A modal dialog component with smooth animations and accessibility support.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig
+      targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage,lightningCommunity__Default"
+    >
+            <property
+        name="title"
+        type="String"
+        label="Title"
+        description="Modal title text"
+      />
+            <property
+        name="size"
+        type="String"
+        label="Size"
+        datasource="small,medium,large,full"
+        default="medium"
+        description="Modal size"
+      />
+            <property
+        name="hideCloseButton"
+        type="Boolean"
+        label="Hide Close Button"
+        default="false"
+        description="Hide the close button"
+      />
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Page">
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

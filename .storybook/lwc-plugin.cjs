@@ -99,7 +99,7 @@ function lwcPlugin(config = {}) {
     
     const lwc = createRollupPlugin(lwcOptions);
     
-    // Filter to exclude Vite/Storybook internals
+    // Filter to exclude Vite/Storybook internals and non-LWC files
     const filter = createFilter(
         undefined,
         [
@@ -109,6 +109,7 @@ function lwcPlugin(config = {}) {
             '**/node_modules/**',
             'index.html',
             '/__vitest_test__/**',
+            '**/*.mdx',  // Exclude MDX files - let Storybook addon-docs handle them
         ]
     );
 

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Procrewz Input</masterLabel>
+    <description
+  >A styled text input component with prefix/suffix, validation, masking, and helper text support.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <!-- App Builder targets with property configuration -->
+        <targetConfig
+      targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage,lightningCommunity__Default"
+    >
+            <!-- Core Properties -->
+            <property
+        name="label"
+        type="String"
+        label="Label"
+        description="Input label text"
+      />
+            <property
+        name="type"
+        type="String"
+        label="Type"
+        default="text"
+        description="Input type (text, email, password, number, tel, url, search)"
+      />
+            <property
+        name="placeholder"
+        type="String"
+        label="Placeholder"
+        description="Placeholder text"
+      />
+            <property
+        name="name"
+        type="String"
+        label="Name"
+        description="Input field name"
+      />
+            <property
+        name="value"
+        type="String"
+        label="Value"
+        description="Input value"
+      />
+            
+            <!-- Size -->
+            <property
+        name="size"
+        type="String"
+        label="Size"
+        default="md"
+        datasource="sm,md,lg"
+        description="Input size"
+      />
+            
+            <!-- Prefix/Suffix -->
+            <property
+        name="prefix"
+        type="String"
+        label="Prefix"
+        description="Text displayed before the input"
+      />
+            <property
+        name="suffix"
+        type="String"
+        label="Suffix"
+        description="Text displayed after the input"
+      />
+            
+            <!-- Text -->
+            <property
+        name="helpText"
+        type="String"
+        label="Helper Text"
+        description="Helper text below input"
+      />
+            <property
+        name="errorMessage"
+        type="String"
+        label="Error Message"
+        description="Error message when hasError is true"
+      />
+            
+            <!-- States -->
+            <property
+        name="disabled"
+        type="Boolean"
+        label="Disabled"
+        default="false"
+        description="Disable the input"
+      />
+            <property
+        name="required"
+        type="Boolean"
+        label="Required"
+        default="false"
+        description="Mark field as required"
+      />
+            <property
+        name="readonly"
+        type="Boolean"
+        label="Read Only"
+        default="false"
+        description="Make input read-only"
+      />
+            <property
+        name="hasError"
+        type="Boolean"
+        label="Has Error"
+        default="false"
+        description="Show error state"
+      />
+            <property
+        name="clearable"
+        type="Boolean"
+        label="Clearable"
+        default="false"
+        description="Show clear button when value exists"
+      />
+            
+            <!-- Visual Options -->
+            <property
+        name="hideLabel"
+        type="Boolean"
+        label="Hide Label"
+        default="false"
+        description="Visually hide label (still accessible)"
+      />
+            <property
+        name="requiredIndicator"
+        type="String"
+        label="Required Indicator"
+        default="*"
+        description="Symbol shown for required fields"
+      />
+            
+            <!-- Masking -->
+            <property
+        name="inputMask"
+        type="String"
+        label="Input Mask"
+        description="Mask type: phone, creditCard, date"
+      />
+        </targetConfig>
+        
+        
+        <!-- Flow Screen -->
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+        name="label"
+        type="String"
+        label="Label"
+        description="Input label text"
+      />
+            <property
+        name="type"
+        type="String"
+        label="Type"
+        default="text"
+        description="Input type"
+      />
+            <property
+        name="placeholder"
+        type="String"
+        label="Placeholder"
+        description="Placeholder text"
+      />
+            <property
+        name="name"
+        type="String"
+        label="Name"
+        description="Input field name"
+      />
+            <property
+        name="value"
+        type="String"
+        label="Value"
+        description="Input value"
+      />
+            <property
+        name="size"
+        type="String"
+        label="Size"
+        default="md"
+        description="Input size"
+      />
+            <property
+        name="helpText"
+        type="String"
+        label="Helper Text"
+        description="Helper text below input"
+      />
+            <property
+        name="required"
+        type="Boolean"
+        label="Required"
+        default="false"
+        description="Mark field as required"
+      />
+            <property
+        name="disabled"
+        type="Boolean"
+        label="Disabled"
+        default="false"
+        description="Disable the input"
+      />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

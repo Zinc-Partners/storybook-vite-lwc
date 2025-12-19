@@ -1,0 +1,786 @@
+/* ================================
+   PROCREWZ INPUT COMPONENT
+   Shadcn-inspired with prefix/suffix support
+================================ */
+
+/* Container */
+.procrewz-input-container {
+  display: flex;
+  flex-direction: column;
+  width: var(--size-width-100);
+  gap: var(--size-spacing-3xs, 4px);
+}
+
+/* ================================
+   LABEL
+================================ */
+
+.procrewz-input-label {
+  display: block;
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-xs, 0.75rem);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text-label, #374151);
+  line-height: var(--size-line-height-text, 1.5);
+}
+
+.procrewz-input-required {
+  color: var(--color-status-error-icon, #dc2626);
+  margin-left: 2px;
+}
+
+/* ================================
+   INPUT WRAPPER
+================================ */
+
+.procrewz-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: var(--size-width-100);
+  min-width: 0;
+  background-color: transparent;
+  border: 1px solid var(--component-input-border-color-default, #e5e7eb);
+  border-radius: var(--radius-6, 6px);
+  box-shadow: var(--shadow-xs, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  transition:
+    color 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+/* Hover State */
+.procrewz-input-wrapper:hover:not(.procrewz-input-wrapper--disabled):not(
+    .procrewz-input-wrapper--focused
+  ) {
+  border-color: var(--component-input-border-color-hover, #d1d5db);
+}
+
+/* Focus State */
+.procrewz-input-wrapper--focused {
+  border-color: var(--color-focus-ring, #5a4295);
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+/* Error State */
+.procrewz-input-wrapper--error {
+  border-color: var(--color-status-error-icon, #dc2626);
+  box-shadow:
+    var(--shadow-xs, 0 1px 2px 0 rgba(0, 0, 0, 0.05)),
+    0 0 0 1px rgba(220, 38, 38, 0.2);
+}
+
+.procrewz-input-wrapper--error.procrewz-input-wrapper--focused {
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-status-error-icon, #dc2626);
+}
+
+/* Disabled State */
+.procrewz-input-wrapper--disabled {
+  background-color: var(--component-input-background-disabled, #f9fafb);
+  border-color: var(--component-input-border-color-disabled, #e5e7eb);
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: var(--opacity-disabled, 0.5);
+}
+
+/* ================================
+   INPUT ELEMENT
+================================ */
+
+.procrewz-input {
+  flex: 1;
+  width: var(--size-width-100);
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-sm, 0.875rem);
+  line-height: var(--size-line-height-input, 1.25);
+  color: var(--component-input-text-color-default, #111827);
+  outline: none;
+  caret-color: var(--color-brand-primary, #5a4295);
+}
+
+.procrewz-input::placeholder {
+  color: var(--color-text-placeholder #6b7280);
+  opacity: 1;
+}
+
+.procrewz-input::selection {
+  background-color: var(--color-brand-primary, #5a4295);
+  color: var(--color-text-inverse, #fff);
+}
+
+.procrewz-input:disabled {
+  color: var(--component-input-text-color-disabled, #9ca3af);
+  cursor: not-allowed;
+}
+
+/* Remove default browser styles */
+.procrewz-input::-webkit-outer-spin-button,
+.procrewz-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.procrewz-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.procrewz-input[type="search"]::-webkit-search-cancel-button,
+.procrewz-input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/* ================================
+   SIZES
+================================ */
+
+/* Small: h-8 (32px) */
+.procrewz-input-wrapper--sm {
+  height: var(--size-control-sm, 32px);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input {
+  padding: var(--size-spacing-3xs, 4px) var(--size-spacing-xs, 10px);
+  font-size: var(--size-font-xs, 0.75rem);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input--has-prefix {
+  padding-left: var(--size-spacing-3xs, 4px);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input--has-suffix {
+  padding-right: var(--size-spacing-3xs, 4px);
+}
+
+/* Medium: h-9 (36px) - Default */
+.procrewz-input-wrapper--md {
+  height: 36px;
+}
+
+.procrewz-input-wrapper--md .procrewz-input {
+  padding: var(--size-spacing-3xs, 4px) var(--size-spacing-sm, 12px);
+  font-size: var(--size-font-sm, 0.875rem);
+}
+
+.procrewz-input-wrapper--md .procrewz-input--has-prefix {
+  padding-left: var(--size-spacing-3xs, 4px);
+}
+
+.procrewz-input-wrapper--md .procrewz-input--has-suffix {
+  padding-right: var(--size-spacing-3xs, 4px);
+}
+
+/* Large: h-10 (40px) */
+.procrewz-input-wrapper--lg {
+  height: var(--size-control-md, 40px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input {
+  padding: var(--size-spacing-3xs, 4px) var(--size-spacing-md, 14px);
+  font-size: var(--size-font-sm, 0.875rem);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input--has-prefix {
+  padding-left: var(--size-spacing-3xs, 4px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input--has-suffix {
+  padding-right: var(--size-spacing-3xs, 4px);
+}
+
+/* ================================
+   PREFIX & SUFFIX
+================================ */
+
+.procrewz-input-prefix,
+.procrewz-input-suffix {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--color-text-muted, #6b7280);
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-sm, 0.875rem);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.procrewz-input-prefix {
+  padding-left: var(--size-spacing-sm, 12px);
+  padding-right: var(--size-spacing-2xs, 8px);
+}
+
+.procrewz-input-suffix {
+  padding-left: var(--size-spacing-2xs, 8px);
+  padding-right: var(--size-spacing-sm, 12px);
+}
+
+/* Size-specific prefix/suffix */
+.procrewz-input-wrapper--sm .procrewz-input-prefix {
+  padding-left: var(--size-spacing-xs, 10px);
+  padding-right: var(--size-spacing-3xs, 4px);
+  font-size: var(--size-font-xs, 0.75rem);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input-suffix {
+  padding-left: var(--size-spacing-3xs, 4px);
+  padding-right: var(--size-spacing-xs, 10px);
+  font-size: var(--size-font-xs, 0.75rem);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-prefix {
+  padding-left: var(--size-spacing-md, 14px);
+  padding-right: var(--size-spacing-2xs, 8px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-suffix {
+  padding-left: var(--size-spacing-2xs, 8px);
+  padding-right: var(--size-spacing-md, 14px);
+}
+
+/* ================================
+   INPUT ICON (Suffix icons for type detection)
+================================ */
+
+.procrewz-input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-right: var(--size-spacing-sm, 12px);
+  color: var(--color-text-muted, #9ca3af);
+  pointer-events: none;
+  border: none;
+  background: transparent;
+}
+
+.procrewz-input-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Clickable icon (for time picker) */
+button.procrewz-input-icon--clickable {
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 0;
+  padding-right: var(--size-spacing-sm, 12px);
+  margin: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-4, 4px);
+  transition: color 150ms ease;
+}
+
+button.procrewz-input-icon--clickable:hover {
+  color: var(--color-text-default, #374151);
+}
+
+button.procrewz-input-icon--clickable:focus {
+  outline: none;
+}
+
+button.procrewz-input-icon--clickable:focus-visible {
+  outline: 2px solid var(--color-focus-ring, #5a4295);
+  outline-offset: 2px;
+}
+
+/* Size-specific icons */
+.procrewz-input-wrapper--sm .procrewz-input-icon {
+  padding-right: var(--size-spacing-xs, 10px);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-icon {
+  padding-right: var(--size-spacing-md, 14px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Icon with clear button - reduce padding */
+.procrewz-input-wrapper--has-icon .procrewz-input-clear {
+  margin-left: 0;
+}
+
+.procrewz-input-wrapper--has-icon.procrewz-input-wrapper--clearable
+  .procrewz-input-icon {
+  padding-right: var(--size-spacing-3xs, 4px);
+}
+
+/* ================================
+   CLEAR BUTTON
+================================ */
+
+.procrewz-input-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--size-spacing-2xs, 6px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted, #9ca3af);
+  cursor: pointer;
+  border-radius: var(--radius-4, 4px);
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.procrewz-input-clear:hover {
+  color: var(--color-text-default, #374151);
+  background-color: var(--color-background-hover, #f3f4f6);
+}
+
+.procrewz-input-clear:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+.procrewz-input-clear-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Size-specific clear button */
+.procrewz-input-wrapper--sm .procrewz-input-clear {
+  width: 20px;
+  height: 20px;
+  margin-right: var(--size-spacing-3xs, 4px);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input-clear-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-clear {
+  width: 28px;
+  height: 28px;
+  margin-right: var(--size-spacing-2xs, 8px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-clear-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ================================
+   PASSWORD TOGGLE BUTTON
+================================ */
+
+.procrewz-input-password-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--size-spacing-2xs, 6px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted, #9ca3af);
+  cursor: pointer;
+  border-radius: var(--radius-4, 4px);
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.procrewz-input-password-toggle:hover {
+  color: var(--color-text-default, #374151);
+  background-color: var(--color-background-hover, #f3f4f6);
+}
+
+.procrewz-input-password-toggle:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-surface-default, #fff),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+.procrewz-input-password-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Size-specific password toggle */
+.procrewz-input-wrapper--sm .procrewz-input-password-toggle {
+  width: 20px;
+  height: 20px;
+  margin-right: var(--size-spacing-3xs, 4px);
+}
+
+.procrewz-input-wrapper--sm .procrewz-input-password-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-password-toggle {
+  width: 28px;
+  height: 28px;
+  margin-right: var(--size-spacing-2xs, 8px);
+}
+
+.procrewz-input-wrapper--lg .procrewz-input-password-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ================================
+   HELPER TEXT / ERROR MESSAGE
+================================ */
+
+.procrewz-input-helper {
+  display: block;
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-xs, 0.75rem);
+  color: var(--color-text-muted, #6b7280);
+  margin-top: var(--size-spacing-2xs, 6px);
+  line-height: var(--size-line-height-text, 1.5);
+}
+
+.procrewz-input-helper--error {
+  color: var(--color-status-error-text, #dc2626);
+}
+
+/* ================================
+   DARK VARIANT
+================================ */
+
+/* Label - Dark */
+.procrewz-input-label--dark {
+  color: var(--color-text-inverse, #f9fafb);
+}
+
+/* Wrapper - Dark */
+.procrewz-input-wrapper--dark {
+  background-color: var(--color-surface-dark, #1f2937);
+  border-color: var(--color-border-dark, #374151);
+  outline-color: #ffffff1a;
+}
+
+.procrewz-input-wrapper--dark:hover:not(.procrewz-input-wrapper--disabled):not(
+    .procrewz-input-wrapper--focused
+  ) {
+  border-color: var(--color-border-dark-hover, #4b5563);
+}
+
+.procrewz-input-wrapper--dark.procrewz-input-wrapper--focused {
+  border-color: var(--color-focus-ring, #5a4295);
+  box-shadow:
+    0 0 0 2px var(--color-surface-dark, #1f2937),
+    0 0 0 4px var(--color-focus-ring, #5a4295);
+}
+
+/* Input - Dark */
+.procrewz-input-wrapper--dark .procrewz-input {
+  color: color-mix(
+    in srgb,
+    var(--color-text-default, #f9fafb) 20%,
+    var(--color-text-inverse)
+  );
+  caret-color: var(--color-brand-primary-light, #8b7cc7);
+}
+
+.procrewz-input-wrapper--dark .procrewz-input::placeholder {
+  color: var(--color-text-muted-dark, #9ca3af);
+}
+
+/* Prefix/Suffix - Dark */
+.procrewz-input-wrapper--dark .procrewz-input-prefix,
+.procrewz-input-wrapper--dark .procrewz-input-suffix {
+  color: var(--color-text-muted-dark, #9ca3af);
+}
+
+/* Icons - Dark */
+.procrewz-input-wrapper--dark .procrewz-input-icon {
+  color: var(--color-text-muted-dark, #6b7280);
+}
+
+.procrewz-input-wrapper--dark button.procrewz-input-icon--clickable:hover {
+  color: var(--color-text-inverse, #f9fafb);
+}
+
+/* Clear Button - Dark */
+.procrewz-input-wrapper--dark .procrewz-input-clear {
+  color: var(--color-text-muted-dark, #6b7280);
+}
+
+.procrewz-input-wrapper--dark .procrewz-input-clear:hover {
+  color: var(--color-text-inverse, #f9fafb);
+  background-color: var(--color-background-hover-dark, #374151);
+}
+
+/* Password Toggle - Dark */
+.procrewz-input-wrapper--dark .procrewz-input-password-toggle {
+  color: var(--color-text-muted-dark, #6b7280);
+}
+
+.procrewz-input-wrapper--dark .procrewz-input-password-toggle:hover {
+  color: var(--color-text-inverse, #f9fafb);
+  background-color: var(--color-background-hover-dark, #374151);
+}
+
+/* Helper Text - Dark */
+.procrewz-input-container--dark .procrewz-input-helper {
+  color: var(--color-text-muted-dark, #9ca3af);
+}
+
+/* Error State - Dark (keeps red but adjusts focus ring background) */
+.procrewz-input-wrapper--dark.procrewz-input-wrapper--error.procrewz-input-wrapper--focused {
+  box-shadow:
+    0 0 0 2px var(--color-surface-dark, #1f2937),
+    0 0 0 4px var(--color-status-error-icon, #dc2626);
+}
+
+/* Disabled - Dark */
+.procrewz-input-wrapper--dark.procrewz-input-wrapper--disabled {
+  background-color: var(--color-surface-dark-disabled, #111827);
+  border-color: var(--color-border-dark, #374151);
+}
+
+/* ================================
+   TIME PICKER DROPDOWN
+================================ */
+
+.procrewz-time-picker {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface-default, #fff);
+  border: 1px solid var(--component-input-border-color-default, #e5e7eb);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: var(
+    --shadow-lg,
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05)
+  );
+  overflow: hidden;
+
+  /* Animation */
+  animation: procrewz-time-picker-in 150ms ease-out;
+  transform-origin: top center;
+}
+
+/* Upward position */
+.procrewz-time-picker--up {
+  top: auto;
+  bottom: calc(100% + 4px);
+  transform-origin: bottom center;
+  animation: procrewz-time-picker-in-up 150ms ease-out;
+}
+
+/* Animation keyframes */
+@keyframes procrewz-time-picker-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes procrewz-time-picker-in-up {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Columns container */
+.procrewz-time-picker__columns {
+  display: flex;
+  flex: 1;
+}
+
+.procrewz-time-picker__column {
+  flex: 1;
+  max-height: 200px;
+  overflow-y: auto;
+  border-right: 1px solid var(--color-border-subtle, #f3f4f6);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-default, #e5e7eb) transparent;
+}
+
+.procrewz-time-picker__column:last-child {
+  border-right: none;
+}
+
+.procrewz-time-picker__column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.procrewz-time-picker__column::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.procrewz-time-picker__column::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-default, #e5e7eb);
+  border-radius: 3px;
+}
+
+.procrewz-time-picker__column--period {
+  flex: 0 0 auto;
+  min-width: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-height: none;
+  overflow: visible;
+}
+
+.procrewz-time-picker__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-sm, 0.875rem);
+  color: var(--color-text-default, #374151);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.procrewz-time-picker__item:hover {
+  background-color: var(--color-background-hover, #f3f4f6);
+}
+
+.procrewz-time-picker__item--selected {
+  /* background-color: var(--color-brand-primary, #5a4295); */
+  background-color: #e5e7eb;
+  color: var(--color-text-default, #111827);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.procrewz-time-picker__item--selected:hover {
+  /* background-color: var(--color-brand-primary-hover, #4a3578); */
+  background-color: #d1d5db;
+}
+
+/* Time Picker Footer/Actions */
+.procrewz-time-picker__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--color-border-subtle, #f3f4f6);
+  background-color: var(--color-surface-subtle, #f9fafb);
+}
+
+.procrewz-time-picker__btn {
+  padding: 6px 12px;
+  border-radius: var(--radius-6, 6px);
+  font-family: var(--font-family-base);
+  font-size: var(--size-font-sm, 0.875rem);
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.procrewz-time-picker__btn--cancel {
+  background: transparent;
+  border: 1px solid var(--color-border-default, #e5e7eb);
+  color: var(--color-text-default, #374151);
+}
+
+.procrewz-time-picker__btn--cancel:hover {
+  background-color: var(--color-background-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #d1d5db);
+}
+
+.procrewz-time-picker__btn--ok {
+  background-color: var(--color-brand-primary, #5a4295);
+  border: 1px solid var(--color-brand-primary, #5a4295);
+  color: var(--color-text-inverse, #fff);
+}
+
+.procrewz-time-picker__btn--ok:hover {
+  background-color: var(--color-brand-primary-hover, #4a3578);
+  border-color: var(--color-brand-primary-hover, #4a3578);
+}
+
+.procrewz-time-picker--dark {
+  background-color: var(--color-surface-dark, #1f2937);
+  border-color: var(--color-border-dark, #374151);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__column {
+  border-color: var(--color-border-dark, #374151);
+}
+
+.procrewz-time-picker--dark
+  .procrewz-time-picker__column::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-dark, #4b5563);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__item {
+  color: var(--color-text-inverse, #f9fafb);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__item:hover {
+  background-color: var(--color-background-hover-dark, #374151);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__item--selected {
+  background-color: var(--color-brand-primary, #5a4295);
+  color: var(--color-text-inverse, #fff);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__item--selected:hover {
+  background-color: var(--color-brand-primary-hover, #4a3578);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__footer {
+  border-color: var(--color-border-dark, #374151);
+  background-color: var(--color-surface-dark-subtle, #111827);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__btn--cancel {
+  border-color: var(--color-border-dark, #374151);
+  color: var(--color-text-inverse, #f9fafb);
+}
+
+.procrewz-time-picker--dark .procrewz-time-picker__btn--cancel:hover {
+  background-color: var(--color-background-hover-dark, #374151);
+  border-color: var(--color-border-dark-hover, #4b5563);
+}

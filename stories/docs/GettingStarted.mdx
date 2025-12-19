@@ -1,0 +1,194 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="About/Getting Started" />
+
+# Getting Started
+
+Learn how to install and use the Procrewz Design System in your Salesforce org.
+
+---
+
+## Installation
+
+### 1. Install the Managed Package
+
+Install the Procrewz Design System managed package in your Salesforce sandbox or production org.
+
+> **Note:** Under Construction - Contact the design system team for the package installation URL.
+
+### 2. Add Components to Your Pages
+
+Once installed, the design system components are available to use in:
+- Lightning App Builder
+- Experience Cloud Builder
+- Custom LWC components
+
+---
+
+## Using Components
+
+### In Lightning App Builder
+
+Drag and drop Procrewz components directly onto your Lightning pages from the component palette.
+
+### In Custom LWC Components
+
+Import and use the components in your own Lightning Web Components:
+
+```html
+<!-- myComponent.html -->
+<template>
+  <div class="container">
+    <c-procrewz-button 
+      label="Submit" 
+      variant="primary"
+      onclick={handleClick}>
+    </c-procrewz-button>
+  </div>
+</template>
+```
+
+---
+
+## Component Reference
+
+### Button Component
+
+```html
+<c-procrewz-button 
+  label="Click me"
+  variant="primary"
+  size="medium">
+</c-procrewz-button>
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td>String</td>
+      <td>—</td>
+      <td>Button text label</td>
+    </tr>
+    <tr>
+      <td><code>variant</code></td>
+      <td>String</td>
+      <td><code>primary</code></td>
+      <td>primary, secondary, navy, destructive, ghost</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td>String</td>
+      <td><code>medium</code></td>
+      <td>small, medium, large</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td>Boolean</td>
+      <td><code>false</code></td>
+      <td>Disables the button</td>
+    </tr>
+    <tr>
+      <td><code>loading</code></td>
+      <td>Boolean</td>
+      <td><code>false</code></td>
+      <td>Shows loading spinner</td>
+    </tr>
+    <tr>
+      <td><code>full-width</code></td>
+      <td>Boolean</td>
+      <td><code>false</code></td>
+      <td>Makes button full width</td>
+    </tr>
+  </tbody>
+</table>
+
+### Input Component
+
+```html
+<c-procrewz-input
+  label="Email"
+  type="email"
+  placeholder="Enter your email"
+  required>
+</c-procrewz-input>
+```
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td>String</td>
+      <td>—</td>
+      <td>Input label text</td>
+    </tr>
+    <tr>
+      <td><code>type</code></td>
+      <td>String</td>
+      <td><code>text</code></td>
+      <td>text, email, password, tel, search, date, time</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td>String</td>
+      <td>—</td>
+      <td>Placeholder text</td>
+    </tr>
+    <tr>
+      <td><code>input-mask</code></td>
+      <td>String</td>
+      <td>—</td>
+      <td>phone, creditCard, date, time</td>
+    </tr>
+    <tr>
+      <td><code>required</code></td>
+      <td>Boolean</td>
+      <td><code>false</code></td>
+      <td>Makes the input required</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td>Boolean</td>
+      <td><code>false</code></td>
+      <td>Disables the input</td>
+    </tr>
+  </tbody>
+</table>
+
+### Modal Component
+
+```html
+<c-procrewz-modal
+  modal-title="Confirm Action"
+  size="medium">
+  <div slot="body">
+    Your modal content here
+  </div>
+  <div slot="footer">
+    <c-procrewz-button label="Cancel" variant="ghost"></c-procrewz-button>
+    <c-procrewz-button label="Confirm" variant="primary"></c-procrewz-button>
+  </div>
+</c-procrewz-modal>
+```
+
+---
+
+## Support
+
+For questions or issues, please contact the design system team.

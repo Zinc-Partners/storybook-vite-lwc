@@ -1,9 +1,9 @@
 {
-  "name": "salesforce-app",
-  "private": true,
+  "name": "procrewz-design-system",
   "version": "1.0.0",
-  "description": "Salesforce App with LWC Storybook",
+  "description": "Procrewz LWC Design System with design tokens",
   "type": "module",
+  "author": "Ruben Mesta",
   "scripts": {
     "lint": "eslint **/{aura,lwc}/**/*.js",
     "test": "npm run test:unit",
@@ -30,10 +30,12 @@
     "@salesforce/eslint-plugin-lightning": "^2.0.0",
     "@salesforce/sfdx-lwc-jest": "^7.0.2",
     "@storybook/addon-a11y": "^10.1.10",
+    "@storybook/addon-docs": "^10.1.10",
     "@storybook/web-components-vite": "^10.1.10",
     "eslint": "^9.29.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.14.0",
+    "eslint-plugin-storybook": "10.1.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "lit": "^3.3.1",
@@ -43,8 +45,7 @@
     "prettier-plugin-apex": "^2.2.6",
     "storybook": "^10.1.10",
     "vite": "^5.4.11",
-    "zinc-design-tokens": "^0.0.16",
-    "eslint-plugin-storybook": "10.1.10"
+    "zinc-design-tokens": "^0.0.16"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [

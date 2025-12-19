@@ -1,6 +1,5 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
+const storybook = require("eslint-plugin-storybook");
 const { defineConfig } = require("eslint/config");
 const eslintJs = require("@eslint/js");
 const jestPlugin = require("eslint-plugin-jest");
