@@ -1,11 +1,32 @@
 // Components are pre-registered via index.js (compiled by Rollup)
 // No imports needed - just use the custom element tags
 
+// Default placeholders for each type (used when placeholder is generic)
+const typePlaceholders = {
+  text: "Enter text...",
+  email: "you@example.com",
+  password: "••••••••",
+  number: "0",
+  tel: "(555) 123-4567",
+  url: "https://example.com",
+  search: "Search..."
+};
+
 // Custom render function
 const renderInput = (args) => {
   const element = document.createElement("c-procrewz-input");
 
-  Object.entries(args).forEach(([key, value]) => {
+  // Auto-update placeholder based on type if using default placeholder
+  const processedArgs = { ...args };
+  if (
+    processedArgs.placeholder === "Enter text..." ||
+    processedArgs.placeholder === ""
+  ) {
+    processedArgs.placeholder =
+      typePlaceholders[processedArgs.type] || "Enter text...";
+  }
+
+  Object.entries(processedArgs).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       element[key] = value;
     }
@@ -879,7 +900,7 @@ export const TimeMask = {
   args: {
     ...defaultArgs,
     label: "Time",
-    placeholder: "HH:MM",
+    placeholder: "12:00 PM",
     inputMask: "time"
   },
   parameters: {
