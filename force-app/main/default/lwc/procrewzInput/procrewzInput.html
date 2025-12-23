@@ -69,6 +69,29 @@
               </svg>
             </button>
           </template>
+          <template lwc:elseif={isCalendarIconClickable}>
+            <!-- Clickable Calendar Icon for Date Picker -->
+            <button
+              type="button"
+              class="procrewz-input-icon procrewz-input-icon--clickable"
+              aria-label="Open date picker"
+              onclick={handleToggleDatePicker}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </button>
+          </template>
           <template lwc:else>
             <span class="procrewz-input-icon">
               <!-- Search Icon -->
@@ -101,8 +124,8 @@
                 </svg>
               </template>
 
-              <!-- Calendar Icon -->
-              <template lwc:if={isCalendarIcon}>
+              <!-- Calendar Icon (non-clickable) -->
+              <template lwc:if={isCalendarIconNonClickable}>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -336,6 +359,188 @@
               >
                 OK
               </button>
+            </div>
+          </div>
+        </template>
+
+        <!-- Date Picker Dropdown -->
+        <template lwc:if={showDatePicker}>
+          <div class={datePickerClass} onclick={handleDatePickerClick}>
+            <!-- Header: Navigation + Month/Year Dropdowns -->
+            <div class="procrewz-date-picker__header">
+              <!-- Previous Month Button -->
+              <button
+                type="button"
+                class="procrewz-date-picker__nav-btn"
+                aria-label="Previous month"
+                onclick={handlePrevMonth}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+
+              <!-- Month/Year Selectors -->
+              <div class="procrewz-date-picker__selectors">
+                <!-- Month Dropdown -->
+                <div class="procrewz-date-picker__month-selector">
+                  <button
+                    type="button"
+                    class="procrewz-date-picker__selector-btn"
+                    aria-haspopup="listbox"
+                    aria-expanded={monthDropdownOpen}
+                    onclick={handleMonthDropdownToggle}
+                  >
+                    {shortMonthLabel}
+                    <svg
+                      class="procrewz-date-picker__chevron"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  <div class={monthDropdownClass}>
+                    <div
+                      class="procrewz-date-picker__dropdown-list"
+                      role="listbox"
+                    >
+                      <template for:each={calendarMonths} for:item="month">
+                        <button
+                          key={month.value}
+                          type="button"
+                          role="option"
+                          class={month.class}
+                          aria-selected={month.selected}
+                          data-value={month.value}
+                          onclick={handleMonthSelect}
+                        >
+                          {month.shortLabel}
+                        </button>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Year Dropdown -->
+                <div class="procrewz-date-picker__year-selector">
+                  <button
+                    type="button"
+                    class="procrewz-date-picker__selector-btn"
+                    aria-haspopup="listbox"
+                    aria-expanded={yearDropdownOpen}
+                    onclick={handleYearDropdownToggle}
+                  >
+                    {currentYear}
+                    <svg
+                      class="procrewz-date-picker__chevron"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  <div
+                    class="procrewz-date-picker__dropdown procrewz-date-picker__year-dropdown"
+                    data-open={yearDropdownOpen}
+                  >
+                    <div
+                      class="procrewz-date-picker__dropdown-list procrewz-date-picker__dropdown-list--scrollable"
+                      role="listbox"
+                    >
+                      <template for:each={calendarYears} for:item="year">
+                        <button
+                          key={year.value}
+                          type="button"
+                          role="option"
+                          class={year.class}
+                          aria-selected={year.selected}
+                          data-value={year.value}
+                          onclick={handleYearSelect}
+                        >
+                          {year.label}
+                        </button>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Next Month Button -->
+              <button
+                type="button"
+                class="procrewz-date-picker__nav-btn"
+                aria-label="Next month"
+                onclick={handleNextMonth}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Weekday Headers -->
+            <div class="procrewz-date-picker__weekdays">
+              <template for:each={weekdays} for:item="day">
+                <div key={day} class="procrewz-date-picker__weekday">{day}</div>
+              </template>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="procrewz-date-picker__grid" role="grid">
+              <template
+                for:each={calendarDays}
+                for:item="week"
+                for:index="weekIndex"
+              >
+                <div
+                  key={week.key}
+                  class="procrewz-date-picker__week"
+                  role="row"
+                >
+                  <template
+                    for:each={week.days}
+                    for:item="dayItem"
+                    for:index="dayIndex"
+                  >
+                    <button
+                      key={dayItem.key}
+                      type="button"
+                      role="gridcell"
+                      class={dayItem.class}
+                      aria-label={dayItem.ariaLabel}
+                      aria-selected={dayItem.isSelected}
+                      data-week={weekIndex}
+                      data-day={dayIndex}
+                      onclick={handleDayClick}
+                    >
+                      {dayItem.day}
+                    </button>
+                  </template>
+                </div>
+              </template>
             </div>
           </div>
         </template>

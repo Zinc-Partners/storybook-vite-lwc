@@ -58,11 +58,21 @@ export default class ProcrewzInput extends LightningElement {
   @track selectedSecond = 0;
   @track selectedPeriod = "AM";
 
+  // Date picker state
+  @track datePickerOpen = false;
+  @track datePickerPosition = "down";
+  @track selectedDate = null;
+  @track currentMonth;
+  @track currentYear;
+  @track monthDropdownOpen = false;
+  @track yearDropdownOpen = false;
+
   // Stored values (committed on OK)
   _committedHour = 12;
   _committedMinute = 0;
   _committedSecond = 0;
   _committedPeriod = "AM";
+  _committedDate = null;
 
   // Private
   cleaveInstance = null;
@@ -80,6 +90,9 @@ export default class ProcrewzInput extends LightningElement {
     this._value = val || "";
     if (this.isTimeMask && val) {
       this.parseTimeValue(val);
+    }
+    if (this.isDatePickerMask && val) {
+      this.parseDateValue(val);
     }
   }
 
@@ -189,11 +202,15 @@ export default class ProcrewzInput extends LightningElement {
 
   connectedCallback() {
     this._boundHandleClickOutside = this.handleClickOutside.bind(this);
+    // Initialize date picker state
+    const today = new Date();
+    this.currentMonth = today.getMonth();
+    this.currentYear = today.getFullYear();
   }
 
   renderedCallback() {
-    // Initialize Cleave after render if needed
-    if (this.inputMask && !this.cleaveInstance && !this.isTimeMask) {
+    // Initialize Cleave after render if needed (not for time picker which has custom UI)
+    if (this.effectiveInputMask && !this.cleaveInstance && !this.isTimeMask) {
       this.initializeCleave();
     }
 
@@ -237,6 +254,8 @@ export default class ProcrewzInput extends LightningElement {
   }
 
   getCleaveOptions() {
+    const mask = this.effectiveInputMask;
+
     // Preset masks
     const presets = {
       phone: {
@@ -250,6 +269,11 @@ export default class ProcrewzInput extends LightningElement {
         date: true,
         datePattern: ["m", "d", "Y"]
       },
+      datePicker: {
+        date: true,
+        datePattern: ["m", "d", "Y"],
+        delimiter: "/"
+      },
       numeral: {
         numeral: true,
         numeralThousandsGroupStyle: "thousand"
@@ -257,23 +281,23 @@ export default class ProcrewzInput extends LightningElement {
     };
 
     // Time mask is handled separately with our custom time picker
-    if (this.inputMask === "time") {
+    if (mask === "time") {
       return null;
     }
 
-    if (typeof this.inputMask === "string" && presets[this.inputMask]) {
-      return presets[this.inputMask];
+    if (typeof mask === "string" && presets[mask]) {
+      return presets[mask];
     }
 
     // Custom mask object passed as JSON string or object
-    if (typeof this.inputMask === "object" && this.inputMask !== null) {
-      return this.inputMask;
+    if (typeof mask === "object" && mask !== null) {
+      return mask;
     }
 
     // Try parsing as JSON string
-    if (typeof this.inputMask === "string" && this.inputMask.startsWith("{")) {
+    if (typeof mask === "string" && mask.startsWith("{")) {
       try {
-        return JSON.parse(this.inputMask);
+        return JSON.parse(mask);
       } catch (e) {
         console.warn("Invalid inputMask JSON:", e);
       }
@@ -287,7 +311,7 @@ export default class ProcrewzInput extends LightningElement {
   // ============================================
 
   get isTimeMask() {
-    return this.inputMask === "time";
+    return this.effectiveInputMask === "time";
   }
 
   get showTimePicker() {
@@ -300,6 +324,377 @@ export default class ProcrewzInput extends LightningElement {
 
   get isClockIconNonClickable() {
     return this.isClockIcon && !this.isTimeMask;
+  }
+
+  // ============================================
+  // Date Picker Logic
+  // ============================================
+
+  get isDatePickerMask() {
+    return this.effectiveInputMask === "datePicker";
+  }
+
+  get showDatePicker() {
+    return this.isDatePickerMask && this.datePickerOpen;
+  }
+
+  get isCalendarIconClickable() {
+    return this.isCalendarIcon && this.isDatePickerMask;
+  }
+
+  get isCalendarIconNonClickable() {
+    return this.isCalendarIcon && !this.isDatePickerMask;
+  }
+
+  get datePickerClass() {
+    const classes = ["procrewz-date-picker"];
+    classes.push(`procrewz-date-picker--${this.variant}`);
+    if (this.datePickerPosition === "up") {
+      classes.push("procrewz-date-picker--up");
+    }
+    return classes.join(" ");
+  }
+
+  get shortMonthLabel() {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    return months[this.currentMonth];
+  }
+
+  get calendarMonths() {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return monthNames.map((name, index) => ({
+      value: index,
+      label: name,
+      shortLabel: name.slice(0, 3),
+      selected: index === this.currentMonth,
+      class:
+        index === this.currentMonth
+          ? "procrewz-date-picker__dropdown-item procrewz-date-picker__dropdown-item--selected"
+          : "procrewz-date-picker__dropdown-item"
+    }));
+  }
+
+  get calendarYears() {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = currentYear - 100; year <= currentYear + 10; year++) {
+      years.push({
+        value: year,
+        label: String(year),
+        selected: year === this.currentYear,
+        class:
+          year === this.currentYear
+            ? "procrewz-date-picker__dropdown-item procrewz-date-picker__dropdown-item--selected"
+            : "procrewz-date-picker__dropdown-item"
+      });
+    }
+    return years;
+  }
+
+  get weekdays() {
+    return ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  }
+
+  get calendarDays() {
+    const days = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const firstDay = new Date(this.currentYear, this.currentMonth, 1);
+    const startingDay = firstDay.getDay();
+    const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
+    const totalDays = lastDay.getDate();
+    const prevMonthLastDay = new Date(this.currentYear, this.currentMonth, 0);
+    const prevMonthDays = prevMonthLastDay.getDate();
+
+    let dayCount = 1;
+    let nextMonthDay = 1;
+
+    for (let week = 0; week < 6; week++) {
+      const weekDays = [];
+      for (let day = 0; day < 7; day++) {
+        const cellIndex = week * 7 + day;
+        let date, dayNumber, isCurrentMonth, isPrevMonth, isNextMonth;
+
+        if (cellIndex < startingDay) {
+          dayNumber = prevMonthDays - startingDay + cellIndex + 1;
+          date = new Date(this.currentYear, this.currentMonth - 1, dayNumber);
+          isCurrentMonth = false;
+          isPrevMonth = true;
+          isNextMonth = false;
+        } else if (dayCount <= totalDays) {
+          dayNumber = dayCount;
+          date = new Date(this.currentYear, this.currentMonth, dayNumber);
+          isCurrentMonth = true;
+          isPrevMonth = false;
+          isNextMonth = false;
+          dayCount++;
+        } else {
+          dayNumber = nextMonthDay;
+          date = new Date(this.currentYear, this.currentMonth + 1, dayNumber);
+          isCurrentMonth = false;
+          isPrevMonth = false;
+          isNextMonth = true;
+          nextMonthDay++;
+        }
+
+        const isToday = date.getTime() === today.getTime();
+        const isSelected =
+          this.selectedDate && this.isSameDay(date, this.selectedDate);
+
+        const classes = ["procrewz-date-picker__day"];
+        if (!isCurrentMonth) classes.push("procrewz-date-picker__day--outside");
+        if (isToday) classes.push("procrewz-date-picker__day--today");
+        if (isSelected) classes.push("procrewz-date-picker__day--selected");
+
+        weekDays.push({
+          key: `${week}-${day}`,
+          date: date,
+          day: dayNumber,
+          isCurrentMonth,
+          isPrevMonth,
+          isNextMonth,
+          isToday,
+          isSelected,
+          class: classes.join(" "),
+          ariaLabel: date.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          })
+        });
+      }
+      days.push({ key: `week-${week}`, days: weekDays });
+    }
+    return days;
+  }
+
+  get monthDropdownClass() {
+    return this.monthDropdownOpen
+      ? "procrewz-date-picker__dropdown procrewz-date-picker__dropdown--open"
+      : "procrewz-date-picker__dropdown";
+  }
+
+  get yearDropdownClass() {
+    return this.yearDropdownOpen
+      ? "procrewz-date-picker__dropdown procrewz-date-picker__dropdown--open"
+      : "procrewz-date-picker__dropdown";
+  }
+
+  isSameDay(date1, date2) {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  }
+
+  parseDateValue(val) {
+    if (!val) {
+      this.selectedDate = null;
+      return;
+    }
+
+    let date;
+    if (val instanceof Date) {
+      date = val;
+    } else if (typeof val === "string") {
+      // Parse MM/DD/YYYY format
+      const match = val.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (match) {
+        const month = parseInt(match[1], 10) - 1;
+        const day = parseInt(match[2], 10);
+        const year = parseInt(match[3], 10);
+        date = new Date(year, month, day);
+      } else {
+        date = new Date(val);
+      }
+    }
+
+    if (date && !isNaN(date.getTime())) {
+      this.selectedDate = date;
+      this._committedDate = date;
+      this.currentMonth = date.getMonth();
+      this.currentYear = date.getFullYear();
+    }
+  }
+
+  formatDateValue(date) {
+    if (!date) return "";
+    // Always use MM/DD/YYYY format to match the Cleave mask
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
+
+  calculateDatePickerPosition() {
+    if (this.dropdownPosition === "up") {
+      this.datePickerPosition = "up";
+      return;
+    }
+    if (this.dropdownPosition === "down") {
+      this.datePickerPosition = "down";
+      return;
+    }
+    this.datePickerPosition = "down";
+    const wrapper = this.template.querySelector(".procrewz-input-wrapper");
+    if (wrapper) {
+      const rect = wrapper.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const dropdownHeight = 340;
+      if (spaceBelow < dropdownHeight && rect.top > dropdownHeight) {
+        this.datePickerPosition = "up";
+      }
+    }
+  }
+
+  @api
+  openDatePicker() {
+    if (this.isDatePickerMask && !this.disabled) {
+      this._committedDate = this.selectedDate;
+      this.calculateDatePickerPosition();
+      this.datePickerOpen = true;
+      this.addClickOutsideListener();
+    }
+  }
+
+  @api
+  closeDatePicker() {
+    this.datePickerOpen = false;
+    this.monthDropdownOpen = false;
+    this.yearDropdownOpen = false;
+    this.removeClickOutsideListener();
+  }
+
+  handleToggleDatePicker(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.datePickerOpen) {
+      this.closeDatePicker();
+    } else {
+      this.openDatePicker();
+    }
+  }
+
+  handleDatePickerClick(event) {
+    event.stopPropagation();
+    // Close month/year dropdowns when clicking outside them
+    if (
+      !event.target.closest(".procrewz-date-picker__month-selector") &&
+      !event.target.closest(".procrewz-date-picker__year-selector")
+    ) {
+      this.monthDropdownOpen = false;
+      this.yearDropdownOpen = false;
+    }
+  }
+
+  handlePrevMonth() {
+    if (this.currentMonth === 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    } else {
+      this.currentMonth--;
+    }
+    this.monthDropdownOpen = false;
+    this.yearDropdownOpen = false;
+  }
+
+  handleNextMonth() {
+    if (this.currentMonth === 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    } else {
+      this.currentMonth++;
+    }
+    this.monthDropdownOpen = false;
+    this.yearDropdownOpen = false;
+  }
+
+  handleMonthDropdownToggle(event) {
+    event.stopPropagation();
+    this.monthDropdownOpen = !this.monthDropdownOpen;
+    this.yearDropdownOpen = false;
+  }
+
+  handleYearDropdownToggle(event) {
+    event.stopPropagation();
+    this.yearDropdownOpen = !this.yearDropdownOpen;
+    this.monthDropdownOpen = false;
+    if (this.yearDropdownOpen) {
+      // eslint-disable-next-line @lwc/lwc/no-async-operation
+      requestAnimationFrame(() => {
+        const dropdown = this.template.querySelector(
+          ".procrewz-date-picker__year-dropdown .procrewz-date-picker__dropdown-list"
+        );
+        const selected = dropdown?.querySelector(
+          ".procrewz-date-picker__dropdown-item--selected"
+        );
+        if (selected && dropdown) {
+          selected.scrollIntoView({ block: "center" });
+        }
+      });
+    }
+  }
+
+  handleMonthSelect(event) {
+    const month = parseInt(event.currentTarget.dataset.value, 10);
+    this.currentMonth = month;
+    this.monthDropdownOpen = false;
+  }
+
+  handleYearSelect(event) {
+    const year = parseInt(event.currentTarget.dataset.value, 10);
+    this.currentYear = year;
+    this.yearDropdownOpen = false;
+  }
+
+  handleDayClick(event) {
+    const dayIndex = event.currentTarget.dataset.day;
+    const weekIndex = event.currentTarget.dataset.week;
+    const week = this.calendarDays[parseInt(weekIndex, 10)];
+    const dayData = week.days[parseInt(dayIndex, 10)];
+
+    this.selectedDate = dayData.date;
+    this._committedDate = dayData.date;
+    this._value = this.formatDateValue(dayData.date);
+
+    // Navigate to clicked month if it's from prev/next month
+    if (dayData.isPrevMonth) {
+      this.handlePrevMonth();
+    } else if (dayData.isNextMonth) {
+      this.handleNextMonth();
+    }
+
+    this.dispatchChangeEvent(this._value);
+    this.closeDatePicker();
   }
 
   parseTimeValue(val) {
@@ -544,12 +939,19 @@ export default class ProcrewzInput extends LightningElement {
   handleClickOutside(event) {
     const container = this.template.querySelector(".procrewz-input-wrapper");
     if (container && !container.contains(event.target)) {
-      // Cancel on click outside (restore committed values)
-      this.selectedHour = this._committedHour;
-      this.selectedMinute = this._committedMinute;
-      this.selectedSecond = this._committedSecond;
-      this.selectedPeriod = this._committedPeriod;
-      this.closeTimePicker();
+      // Handle time picker
+      if (this.timePickerOpen) {
+        this.selectedHour = this._committedHour;
+        this.selectedMinute = this._committedMinute;
+        this.selectedSecond = this._committedSecond;
+        this.selectedPeriod = this._committedPeriod;
+        this.closeTimePicker();
+      }
+      // Handle date picker
+      if (this.datePickerOpen) {
+        this.selectedDate = this._committedDate;
+        this.closeDatePicker();
+      }
     }
   }
 
@@ -576,11 +978,14 @@ export default class ProcrewzInput extends LightningElement {
     // If icon is explicitly set, use it
     if (this.icon) return this.icon;
 
-    // Auto-detect based on inputMask
-    if (this.inputMask === "creditCard") return "creditCard";
-    if (this.inputMask === "date") return "calendar";
-    if (this.inputMask === "time") return "clock";
-    if (this.inputMask === "phone") return "phone";
+    const mask = this.effectiveInputMask;
+
+    // Auto-detect based on effectiveInputMask
+    if (mask === "creditCard") return "creditCard";
+    if (mask === "date") return "calendar";
+    if (mask === "datePicker") return "calendar";
+    if (mask === "time") return "clock";
+    if (mask === "phone") return "phone";
 
     // Auto-detect based on type
     if (this.type === "email") return "email";
@@ -588,6 +993,8 @@ export default class ProcrewzInput extends LightningElement {
     if (this.type === "tel") return "phone";
     if (this.type === "date") return "calendar";
     if (this.type === "time") return "clock";
+    if (this.type === "creditCard") return "creditCard";
+    if (this.type === "currency") return null; // No icon for currency
 
     return null;
   }
@@ -633,7 +1040,29 @@ export default class ProcrewzInput extends LightningElement {
     if (this.isPasswordType && this.passwordVisible) {
       return "text";
     }
+    // Custom types that render as text inputs
+    const customTypes = ["date", "time", "creditCard", "currency"];
+    if (customTypes.includes(this.type)) {
+      return "text";
+    }
     return this.type;
+  }
+
+  // Auto-detect inputMask from type
+  get effectiveInputMask() {
+    // If inputMask is explicitly set, use it
+    if (this.inputMask) {
+      return this.inputMask;
+    }
+    // Auto-detect from type
+    const typeToMask = {
+      tel: "phone",
+      date: "datePicker",
+      time: "time",
+      creditCard: "creditCard",
+      currency: "numeral"
+    };
+    return typeToMask[this.type] || null;
   }
 
   get passwordToggleLabel() {

@@ -11,6 +11,13 @@ const preview = {
         date: /Date$/i
       }
     },
+    docs: {
+      // Show code panel on individual stories (Canvas view)
+      source: {
+        type: "dynamic", // Dynamically generate code from args
+        language: "html"
+      }
+    },
     options: {
       storySort: {
         order: [
