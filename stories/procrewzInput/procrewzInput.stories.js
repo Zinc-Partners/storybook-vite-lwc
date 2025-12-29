@@ -15,7 +15,8 @@ const typeConfig = {
   currency: { placeholder: "0.00", mask: "numeral" }
 };
 
-// Default helper and error text
+// Default text values
+const DEFAULT_LABEL = "Label";
 const DEFAULT_HELP_TEXT =
   "This field provides additional context to help users understand what to enter.";
 const DEFAULT_ERROR_TEXT = "Please check this field and try again.";
@@ -26,7 +27,7 @@ const generateSourceCode = (args) => {
   const attrs = [];
 
   // Label
-  if (args.label) attrs.push(`label="${args.label}"`);
+  if (args.showLabel) attrs.push(`label="${DEFAULT_LABEL}"`);
 
   // Type (only if not text)
   if (args.type && args.type !== "text") {
@@ -99,6 +100,14 @@ const renderInput = (args) => {
     processedArgs.inputMask = config.mask;
   }
 
+  // Handle showLabel toggle
+  if (processedArgs.showLabel) {
+    processedArgs.label = DEFAULT_LABEL;
+  } else {
+    delete processedArgs.label;
+  }
+  delete processedArgs.showLabel;
+
   // Handle showHelpText toggle
   if (processedArgs.showHelpText) {
     processedArgs.helpText = DEFAULT_HELP_TEXT;
@@ -144,9 +153,9 @@ export default {
     // ============================================
     // CORE
     // ============================================
-    label: {
-      control: "text",
-      description: "Label text displayed above the input",
+    showLabel: {
+      control: "boolean",
+      description: "Show label above the input",
       table: { category: "Core" }
     },
     type: {
@@ -251,7 +260,7 @@ export default {
 
 // Default args
 const defaultArgs = {
-  label: "Label",
+  showLabel: true,
   type: "text",
   placeholder: "",
   value: "",
@@ -286,7 +295,7 @@ export const Default = {
 export const WithLabel = {
   args: {
     ...defaultArgs,
-    label: "Email Address",
+    showLabel: true,
     type: "email"
   },
   parameters: {
@@ -301,7 +310,7 @@ export const WithLabel = {
 export const Required = {
   args: {
     ...defaultArgs,
-    label: "Full Name",
+    showLabel: true,
     required: true
   },
   parameters: {
@@ -316,7 +325,7 @@ export const Required = {
 export const WithHelperText = {
   args: {
     ...defaultArgs,
-    label: "Password",
+    showLabel: true,
     type: "password",
     showHelpText: true
   },
@@ -332,7 +341,7 @@ export const WithHelperText = {
 export const ErrorState = {
   args: {
     ...defaultArgs,
-    label: "Email",
+    showLabel: true,
     type: "email",
     value: "invalid-email",
     showError: true
@@ -349,7 +358,7 @@ export const ErrorState = {
 export const Disabled = {
   args: {
     ...defaultArgs,
-    label: "Disabled Field",
+    showLabel: true,
     value: "Cannot edit this",
     disabled: true
   },
@@ -369,7 +378,7 @@ export const Disabled = {
 export const Small = {
   args: {
     ...defaultArgs,
-    label: "Small",
+    showLabel: true,
     size: "sm"
   }
 };
@@ -377,7 +386,7 @@ export const Small = {
 export const Medium = {
   args: {
     ...defaultArgs,
-    label: "Medium (Default)",
+    showLabel: true,
     size: "md"
   }
 };
@@ -385,7 +394,7 @@ export const Medium = {
 export const Large = {
   args: {
     ...defaultArgs,
-    label: "Large",
+    showLabel: true,
     size: "lg"
   }
 };
@@ -397,7 +406,7 @@ export const Large = {
 export const WithPrefix = {
   args: {
     ...defaultArgs,
-    label: "Website",
+    showLabel: true,
     type: "url",
     prefix: "https://"
   },
@@ -413,7 +422,7 @@ export const WithPrefix = {
 export const WithSuffix = {
   args: {
     ...defaultArgs,
-    label: "Email",
+    showLabel: true,
     suffix: "@company.com"
   },
   parameters: {
@@ -428,7 +437,7 @@ export const WithSuffix = {
 export const WithPrefixAndSuffix = {
   args: {
     ...defaultArgs,
-    label: "Price",
+    showLabel: true,
     type: "currency",
     prefix: "$",
     suffix: "USD"
@@ -449,7 +458,7 @@ export const WithPrefixAndSuffix = {
 export const Clearable = {
   args: {
     ...defaultArgs,
-    label: "Search",
+    showLabel: true,
     type: "search",
     value: "Hello World",
     clearable: true
@@ -470,7 +479,7 @@ export const Clearable = {
 export const Password = {
   args: {
     ...defaultArgs,
-    label: "Password",
+    showLabel: true,
     type: "password"
   },
   parameters: {
@@ -486,7 +495,7 @@ export const Password = {
 export const Phone = {
   args: {
     ...defaultArgs,
-    label: "Phone Number",
+    showLabel: true,
     type: "tel"
   },
   parameters: {
@@ -502,7 +511,7 @@ export const Phone = {
 export const DatePicker = {
   args: {
     ...defaultArgs,
-    label: "Date",
+    showLabel: true,
     type: "date"
   },
   parameters: {
@@ -518,7 +527,7 @@ export const DatePicker = {
 export const TimePicker = {
   args: {
     ...defaultArgs,
-    label: "Time",
+    showLabel: true,
     type: "time"
   },
   parameters: {
@@ -534,7 +543,7 @@ export const TimePicker = {
 export const CreditCard = {
   args: {
     ...defaultArgs,
-    label: "Card Number",
+    showLabel: true,
     type: "creditCard"
   },
   parameters: {
@@ -549,7 +558,7 @@ export const CreditCard = {
 export const Currency = {
   args: {
     ...defaultArgs,
-    label: "Amount",
+    showLabel: true,
     type: "currency",
     prefix: "$"
   },
@@ -569,7 +578,7 @@ export const Currency = {
 export const DarkTheme = {
   args: {
     ...defaultArgs,
-    label: "Dark Theme Input",
+    showLabel: true,
     type: "email",
     variant: "dark"
   },
@@ -586,7 +595,7 @@ export const DarkTheme = {
 export const DatePickerDark = {
   args: {
     ...defaultArgs,
-    label: "Select Date",
+    showLabel: true,
     type: "date",
     variant: "dark"
   },
