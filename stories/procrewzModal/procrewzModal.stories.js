@@ -40,9 +40,7 @@ const renderModal = (args) => {
       element and CSS <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px;">@starting-style</code>.
     </p>
      <p style="margin: 0 0 16px 0; color: var(--color-text-default, #111827);">
-      This is a modal dialog with smooth enter/exit animations using the native 
-      <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px;">&lt;dialog&gt;</code> 
-      element and CSS <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px;">@starting-style</code>.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
     
     <p style="margin: 0; color: var(--color-text-muted, #6b7280);">
